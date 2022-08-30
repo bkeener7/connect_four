@@ -1,7 +1,7 @@
 require 'rspec'
 
 #this test will check:
-# - all columns are present (A-G); (columnA = Column.new())
+
 # - column can be selectable and fillable
 # - column will know valid and invalid spaces
 # - the player will only make valid moves (e.g. fills bottom row first)
@@ -21,3 +21,12 @@ RSpec.describe Row do
     end
 
 end
+
+
+
+
+
+
+
+
+# - all columns are present (A-G); (columnA = Column.new())
