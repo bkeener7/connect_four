@@ -10,10 +10,3 @@ require 'rspec'
 # - row will be default attribute (array)
 # - row will be looped into an array six times for each column (method)
 # - static attributes: blank array for row
-
-# if empty? == false
-# end
-
-# if empty? == true
-#     player 1 = true (or false)
-# end
