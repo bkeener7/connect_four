@@ -14,7 +14,7 @@ RSpec.describe Row do
 
         row = Row.new("Bryan")
 
-        expect(row.occupied). to eq(FALSE)      #Initial state of attributes should be FALSE
+        expect(row.occupied).to eq(false)      #Initial state of attributes should be FALSE
 
         expect(row.player).to eq("Bryan")     
 
@@ -24,7 +24,7 @@ RSpec.describe Row do
 
         row = Row.new("Mostafa")
 
-        expect(row.occupied). to eq(FALSE)      #Initial state of attributes should be FALSE
+        expect(row.occupied).to eq(false)      #Initial state of attributes should be FALSE
 
         expect(row.player).to eq("Mostafa")     
 
@@ -34,11 +34,11 @@ RSpec.describe Row do
 
         row = Row.new("Bryan")
 
-        expect(row.occupied). to eq(FALSE)      
+        expect(row.occupied).to eq(false)      
 
         row.toggle_occupied                         #Calling the toggle method on the occupied attribute
 
-        expect(row.occupied). to eq(TRUE)   
+        expect(row.occupied).to eq(true)   
 
     end
 
