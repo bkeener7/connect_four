@@ -15,8 +15,8 @@ RSpec.describe Row do
     
     it "exists" do
 
-        row = Column.new
-        expect(row).to be_an_instance_of(Row)
+        column = Column.new
+        expect(column).to be_an_instance_of(Column)
 
     end
 
