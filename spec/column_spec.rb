@@ -10,3 +10,14 @@ require 'rspec'
 # - row will be default attribute (array)
 # - row will be looped into an array six times for each column (method)
 # - static attributes: blank array for row
+
+RSpec.describe Row do
+    
+    it "exists" do
+
+        row = Column.new
+        expect(row).to be_an_instance_of(Row)
+
+    end
+
+end
