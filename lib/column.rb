@@ -1,3 +1,5 @@
 class Column
-    def initialize([])
+    def initialize
+        
+    end
 end

@@ -45,3 +45,4 @@ end
 
 
 # - all columns are present (A-G); (columnA = Column.new()) ---> for board in future
+
