@@ -1,31 +1,28 @@
-require 'pry'
 class Column
 
     attr_reader :rows, :count
 
-    def initialize(rows = [])   #was there a reason we made this dynamic?
-        @rows = rows
+    def initialize
+        @rows = []
         @count = 5
+        generate_rows
     end
 
     def generate_rows
         6.times do
-            @rows << Row.new()
+            @rows << Row.new
         end
         @rows[5].toggle_playable
-    end
-    
+    end    
     
     def play_piece(player)
-            if @rows[count].playable == true
-                @rows[count].toggle_occupied 
-                @rows[count].toggle_player(player)
-                @rows[count].toggle_playable          
-                @rows[count - 1].toggle_playable
-            end
-
-            if count > 1
-            @count -= 1 #make sure to address line 23 possibly becoming negative
+            if      @count > 0 && @rows[count].playable == true
+                        @rows[count].toggle_player(player)         
+                        @rows[count - 1].toggle_playable
+                        @count -= 1
+            elsif   @count == 0 && @rows[count].playable == true
+                        @rows[count].toggle_player(player)
+            else    puts "That is an invalid move." #evaluate later where best location is for this 
             end
     end
 

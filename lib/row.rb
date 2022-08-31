@@ -1,14 +1,9 @@
 class Row
-    attr_reader :player, :occupied, :playable
+    attr_reader :player, :playable
 
     def initialize
         @player = ""
-        @occupied = false
         @playable = false
-    end
-
-    def toggle_occupied
-        @occupied = !@occupied
     end
 
     def toggle_playable
@@ -16,7 +11,11 @@ class Row
     end
 
     def toggle_player(player)
-        @player = player
+        if  @playable == true
+            @player = player
+            toggle_playable
+        else :invalid_move #evaluate later where best location is for this          
+        end
     end
     
 end

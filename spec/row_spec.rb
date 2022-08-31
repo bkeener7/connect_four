@@ -1,7 +1,6 @@
 require 'rspec'
 require './lib/row'
 
-
 RSpec.describe Row do
     
     it "exists" do
@@ -11,48 +10,33 @@ RSpec.describe Row do
 
     end
 
-    it "has three readable attributes 'occupied', 'player', and 'playable'" do
+    it "has two default attributes 'playable' is false and 'player' is blank" do
 
         row = Row.new
-        expect(row.occupied).to eq(false)      #Initial state of attributes should be FALSE
-        expect(row.player).to eq('') 
+        expect(row.player).to eq("") 
+        expect(row.playable).to eq(false)
+
+    end    
+
+    it 'has playable rows and a player can play a piece, then the row is occupied' do
+        
+        row = Row.new
+    
+        row.toggle_playable
+        expect(row.playable).to eq(true)
+        row.toggle_player("Mostafa")
+        expect(row.player).to eq("Mostafa")
         expect(row.playable).to eq(false)
 
     end
 
-
-    it "can add a player name" do
+    it 'prints an error message if player tries to make an invalid move' do
 
         row = Row.new
-
-        row.toggle_player('Bryan')
         
-        expect(row.player).to eq("Bryan") 
+        expect(row.playable).to eq(false)
+        expect(row.toggle_player("Mostafa")).to eq(:invalid_move)
 
     end
-
-    it 'has a method to toggle occupied attribute' do
-
-        row = Row.new
-
-        expect(row.occupied).to eq(false)  
-        row.toggle_occupied                         #Calling the toggle method on the occupied attribute
-        expect(row.occupied).to eq(true)
-        row.toggle_occupied
-        expect(row.occupied).to eq(false)  
-
-    end
-
-    it "can toggle playable attribute" do
-
-        row = Row.new
-
-        expect(row.playable).to eq(false)  
-        row.toggle_playable                         
-        expect(row.playable).to eq(true)
-        row.toggle_playable
-        expect(row.playable).to eq(false)  
-        
-    end 
 
 end
