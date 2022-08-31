@@ -5,42 +5,37 @@ RSpec.describe Row do
     
     it "exists" do
 
-        row = Row.new('Bryan')
+        row = Row.new
         expect(row).to be_an_instance_of(Row)
 
     end
 
-    it "has two readable attributes 'occupied' and 'player'" do
+    it "has two default attributes 'playable' is false and 'player' is blank" do
 
-        row = Row.new()
-        expect(row.occupied).to eq(false)      #Initial state of attributes should be FALSE
-        expect(row.player).to eq('') 
+        row = Row.new
+        expect(row.player).to eq("") 
+        expect(row.playable).to eq(false)
 
-    end
+    end    
 
-    it 'has an empty default player' do
-
-        row = Row.new()
-        expect(row.player).to eq('')
-
-    end
-
-    it "can have a player name" do
-
-        row = Row.new('Mostafa')
-        expect(row.occupied).to eq(false)      #Initial state of attributes should be FALSE
-        expect(row.player).to eq("Mostafa") 
+    it 'has playable rows and a player can play a piece, then the row is occupied' do
+        
+        row = Row.new
+    
+        row.toggle_playable
+        expect(row.playable).to eq(true)
+        row.toggle_player("Mostafa")
+        expect(row.player).to eq("Mostafa")
+        expect(row.playable).to eq(false)
 
     end
 
-    it 'has a method to toggle occupied attribute' do
+    it 'prints an error message if player tries to make an invalid move' do
 
-        row = Row.new()
-        expect(row.occupied).to eq(false)  
-        row.toggle_occupied                         #Calling the toggle method on the occupied attribute
-        expect(row.occupied).to eq(true)
-        row.toggle_occupied
-        expect(row.occupied).to eq(false)  
+        row = Row.new
+        
+        expect(row.playable).to eq(false)
+        expect(row.toggle_player("Mostafa")).to eq(:invalid_move)
 
     end
 
