@@ -16,9 +16,10 @@ class Column
     end
     
     
-    def play_piece
+    def play_piece(player)
             if @rows[count].playable == true
                 @rows[count].toggle_occupied 
+                @rows[count].toggle_player(player)
                 @rows[count].toggle_playable          
                 @rows[count - 1].toggle_playable
             end

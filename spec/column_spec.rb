@@ -49,7 +49,7 @@ RSpec.describe Column do
 
     end
 
-    xit '4. fills the next available row with current players piece' do
+    it '4. fills the next available row with current players piece' do
 
         column = Column.new
 
@@ -57,13 +57,13 @@ RSpec.describe Column do
 
         expect(column.rows[5].occupied).to eq(false)
         expect(column.rows[5].player).to eq('')
-        column.play_piece
+        column.play_piece("Bryan")
         expect(column.rows[5].occupied).to eq(true)
         expect(column.rows[5].player).to eq('Bryan')
 
         expect(column.rows[4].occupied).to eq(false)
         expect(column.rows[4].player).to eq('')
-        column.play_piece
+        column.play_piece("Bryan")
         expect(column.rows[4].occupied).to eq(true)
         expect(column.rows[4].player).to eq('Bryan')
 
@@ -78,16 +78,32 @@ RSpec.describe Column do
         expect(column.rows[5].playable).to eq(true)
         expect(column.rows[4].playable).to eq(false)
 
-        column.play_piece
+        column.play_piece("Bryan")
 
         expect(column.rows[5].playable).to eq(false)
         expect(column.rows[4].playable).to eq(true)
 
-        column.play_piece
+        column.play_piece("Bryan")
         expect(column.rows[5].playable).to eq(false)
         expect(column.rows[4].playable).to eq(false)
         expect(column.rows[3].playable).to eq(true)
 
+    end
+
+    it '6. adds player name to row when playing piece' do
+
+        column = Column.new
+
+        column.generate_rows
+
+        expect(column.rows[5].player).to eq('')
+        column.play_piece("Bryan")
+        expect(column.rows[5].player).to eq('Bryan')
+
+        expect(column.rows[4].player).to eq('')
+        column.play_piece("Mostafa")
+        expect(column.rows[4].player).to eq('Mostafa')
+        
     end
 
 end
