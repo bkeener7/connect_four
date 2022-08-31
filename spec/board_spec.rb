@@ -20,7 +20,7 @@ RSpec.describe Board do
         expect(board.columns).to eq([])
     end
 
-    it "3. generates 7 columns" do
+    it "3. generates 7 columns with 6 rows each" do
 
         board = Board.new
 
@@ -31,20 +31,6 @@ RSpec.describe Board do
         expect(board.columns.length).to eq(7)
         expect(board.columns[0]).to be_an_instance_of(Column)
         expect(board.columns[6]).to be_an_instance_of(Column)
-        expect(board.columns[0].rows).to eq([])
-
-    end
-
-    it "4. fills each column with 6 rows" do
-
-        board = Board.new
-
-        expect(board.columns).to eq([])
-
-        board.generate_columns
-
-        board.fill_columns_with_rows
-
         expect(board.columns.length).to eq(7)
         expect(board.columns[0].rows.length).to eq(6)
         expect(board.columns[0]).to be_an_instance_of(Column)
@@ -53,7 +39,5 @@ RSpec.describe Board do
         expect(board.columns[6].rows[5]).to be_an_instance_of(Row)
 
     end
-
-
-
+    
 end
