@@ -23,7 +23,10 @@ class Column
                 @rows[count].toggle_playable          
                 @rows[count - 1].toggle_playable
             end
+
+            if count > 1
             @count -= 1 #make sure to address line 23 possibly becoming negative
+            end
     end
 
 end
