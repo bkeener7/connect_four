@@ -2,6 +2,7 @@ require 'rspec'
 require './lib/column'
 require './lib/row'
 require './lib/column'
+require 'pry'
 
 #this test will check:
 # - column can be selectable and fillable
@@ -34,28 +35,60 @@ RSpec.describe Column do
 
     end
 
-    it 'fills the rows attribute with 6 instances of the row class' do
+    it '3. fills the rows attribute with 6 instances of the row class' do
 
         column = Column.new
 
         expect(column.rows).to eq([])
 
-        row_1 = Row.new()
-        row_2 = Row.new()
-        row_3 = Row.new()
-        row_4 = Row.new()
-        row_5 = Row.new()
-        row_6 = Row.new()
-
         column.generate_rows
 
-        expect(column.rows).to eq([row_1, row_2, row_3, row_4, row_5, row_6])
+        expect(column.rows.length).to eq(6)
+        expect(column.rows[0]).to be_an_instance_of(Row)
+        expect(column.rows[5]).to be_an_instance_of(Row)
 
     end
 
-        
+    xit '4. fills the next available row with current players piece' do
 
+        column = Column.new
 
+        column.generate_rows
+
+        expect(column.rows[5].occupied).to eq(false)
+        expect(column.rows[5].player).to eq('')
+        column.play_piece
+        expect(column.rows[5].occupied).to eq(true)
+        expect(column.rows[5].player).to eq('Bryan')
+
+        expect(column.rows[4].occupied).to eq(false)
+        expect(column.rows[4].player).to eq('')
+        column.play_piece
+        expect(column.rows[4].occupied).to eq(true)
+        expect(column.rows[4].player).to eq('Bryan')
+
+    end
+
+    it '5. only plays in valid spaces' do
+
+        column = Column.new
+
+        column.generate_rows
+
+        expect(column.rows[5].playable).to eq(true)
+        expect(column.rows[4].playable).to eq(false)
+
+        column.play_piece
+
+        expect(column.rows[5].playable).to eq(false)
+        expect(column.rows[4].playable).to eq(true)
+
+        column.play_piece
+        expect(column.rows[5].playable).to eq(false)
+        expect(column.rows[4].playable).to eq(false)
+        expect(column.rows[3].playable).to eq(true)
+
+    end
 
 end
 
