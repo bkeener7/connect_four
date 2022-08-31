@@ -3,7 +3,7 @@ class Column
 
     attr_reader :rows, :count
 
-    def initialize(rows = [])
+    def initialize(rows = [])   #was there a reason we made this dynamic?
         @rows = rows
         @count = 5
     end

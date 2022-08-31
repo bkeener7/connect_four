@@ -52,6 +52,7 @@ RSpec.describe Row do
         expect(row.playable).to eq(true)
         row.toggle_playable
         expect(row.playable).to eq(false)  
+        
     end 
 
 end

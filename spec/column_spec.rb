@@ -1,5 +1,4 @@
 require 'rspec'
-require './lib/column'
 require './lib/row'
 require './lib/column'
 require 'pry'
@@ -103,7 +102,7 @@ RSpec.describe Column do
         expect(column.rows[4].player).to eq('')
         column.play_piece("Mostafa")
         expect(column.rows[4].player).to eq('Mostafa')
-        
+
     end
 
 end
