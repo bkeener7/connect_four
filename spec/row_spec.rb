@@ -1,6 +1,7 @@
 require 'rspec'
 require './lib/row'
 
+
 RSpec.describe Row do
     
     it "exists" do
