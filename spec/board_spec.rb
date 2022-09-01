@@ -56,7 +56,7 @@ RSpec.describe Board do
 
 
 
-    it "6. changes dots on the board to 'x' according to player turn" do
+    it "5. changes dots on the board to 'x' for player 1 or 'o' for player 2" do
 
         board = Board.new("Megan", "Hod")
         board.generate_columns
@@ -124,13 +124,11 @@ RSpec.describe Board do
         board.update_layout
         expect(board.layout).to eq("\n\nA B C D E F G\nx . . . . . .\nx . . . . . o\nx . . . . . o\nx . . . . . o\nx . . . . . o\nx . . x o . o\n\n")
 
-        
 
 
     end
 
 
-    
 end
 
 #binding.pry
