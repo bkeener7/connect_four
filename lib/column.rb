@@ -24,6 +24,7 @@ class Column
                         @rows[count].toggle_player(player)
             else    puts "That is an invalid move." #evaluate later where best location is for this 
             end
+
     end
 
 end
