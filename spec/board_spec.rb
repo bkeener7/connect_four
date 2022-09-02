@@ -60,7 +60,7 @@ RSpec.describe Board do
 
 
 
-    xit ". changes dots on the board to 'x' for player 1 or 'o' for player 2" do
+    it ". changes dots on the board to 'x' for player 1 or 'o' for player 2" do
         board = Board.new("Megan", "Hod")
   
         expect(board.columns.length).to eq(7)
@@ -68,7 +68,7 @@ RSpec.describe Board do
         expect(board.layout).to eq("\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\n")
 
         board.columns[0].play_piece("Megan")
-        expect(board.columns[0].rows[5].player_1).to eq("Megan")
+        expect(board.columns[0].rows[5].player).to eq("Megan")
 
         board.update_layout
         expect(board.layout).to eq("\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\nx . . . . . .\n\n")
