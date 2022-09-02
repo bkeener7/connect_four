@@ -51,7 +51,6 @@ RSpec.describe Board do
 
 
         expect(board.layout).to eq("\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\n")
-
     end
 
 
@@ -60,6 +59,7 @@ RSpec.describe Board do
 
         board = Board.new("Megan", "Hod")
         board.generate_columns
+
 
         expect(board.columns.length).to eq(7)
         expect(board.columns[0].rows.length).to eq(6)
@@ -123,12 +123,11 @@ RSpec.describe Board do
 
         board.update_layout
         expect(board.layout).to eq("\n\nA B C D E F G\nx . . . . . .\nx . . . . . o\nx . . . . . o\nx . . . . . o\nx . . . . . o\nx . . x o . o\n\n")
-
-
+        
 
     end
 
 
 end
 
-#binding.pry
+

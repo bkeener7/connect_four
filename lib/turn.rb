@@ -1,7 +1,29 @@
-# needs to have player select column (user input) only A-G, otherwise error
-# needs to show invalid plays (a full column), decide where this occurs
-# program bot here (maybe)
-# Board starts top left at columns[0] and rows[0] and bottom right is columns[6] and rows[5]
-# print_board after every turn
-# incorporate a draw, win and loss
-# look at iteration 3 gameplay and end game
+class Turn
+
+    attr_reader :user_selection
+    def initialize
+        @column_conversion = {'A' => 0, 'B' => 1, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7}
+        @user_selection = []
+    end
+
+    def column_select (user_selection, player)
+        @user_selection = [@column_conversion[user_selection], player]
+    end
+
+    # def column_win
+
+    # end
+
+    # def row_win
+
+    # end
+
+    # def diagonal_win
+        
+    # end
+
+    # def winner
+
+    # end
+
+end

@@ -23,6 +23,7 @@ class Board
         7.times do
             @columns << Column.new
         end
+
     end
 
     def layout_print
@@ -73,7 +74,6 @@ class Board
         end
 
     end
-
 
 
 end
