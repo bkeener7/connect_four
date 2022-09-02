@@ -25,7 +25,7 @@ class Board
     end
   end
 
-  def layout_print
+  def print_layout
     print @layout
   end
 
@@ -37,9 +37,9 @@ class Board
   end
 
   def board_logic
-    if @columns[@column_index].rows[@row_index].player == @player1
+    if @columns[@column_index].rows[@row_index].player == @player_1
       @layout[@layout_index] = "x"
-    elsif @columns[@column_index].rows[@row_index].player == @player2
+    elsif @columns[@column_index].rows[@row_index].player == @player_2
       @layout[@layout_index] = "o"
     end
   end
