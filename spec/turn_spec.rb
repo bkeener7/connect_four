@@ -75,7 +75,7 @@ RSpec.describe Turn do
 
         expect(board.columns[0].rows[0].playable).to eq(false)
         expect(board.columns[0].rows[0].player).to eq('Bryan')
-        binding.pry
+        
         #invalid player move here
         expect(board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])).to eq(puts 'That is an invalid move.')
     end

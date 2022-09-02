@@ -1,7 +1,8 @@
 require 'rspec'
 require './lib/row'
 require './lib/column'
-require'./lib/board'
+require './lib/board'
+require './lib/game'
 require 'pry'
 
 RSpec.describe Game do

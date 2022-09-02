@@ -1,6 +1,6 @@
 class Column
 
-    attr_reader :rows, :count
+    attr_reader :rows, :count, :play_piece
 
     def initialize
         @rows = []
@@ -13,8 +13,9 @@ class Column
             @rows << Row.new
         end
         @rows[5].toggle_playable
-    end    
-    
+    end
+
+      
     def play_piece(player)
             if      @count > 0 && @rows[count].playable == true
                         @rows[count].toggle_player(player)         
