@@ -1,5 +1,5 @@
 class Column
-  attr_reader :rows, :count
+  attr_reader :rows, :count #can remove from reader
 
   def initialize
     @rows = []

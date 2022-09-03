@@ -7,9 +7,9 @@ class Board
               :layout_index,
               :layout
 
-  def initialize(player_1, player_2)
-    @player_1 = player_1
-    @player_2 = player_2 
+  def initialize
+    @player_1 = ""
+    @player_2 = ""
     @columns = []
     generate_columns
     @column_index = 0
@@ -55,72 +55,7 @@ class Board
     end
   end
 
-  def column_win
-    y = 0
-    7.times do
-      player_column = []
-      x = 5
-
-      6.times do
-        player_column << columns[y].rows[x].player
-        x -= 1
-      end
-
-      if player_column.chunk_while(&:==).any?{ |player| player.size == 4}
-        return player_column.max_by{ |player| player_column.count(player)}
-      end
-      
-      y += 1
-    end
-    :no_win
-  end
-
-  def row_win
-    x = 5
-    6.times do
-      player_row = []
-      y = 0
-
-      7.times do
-        player_row <<columns[y].rows[x].player
-        y += 1
-      end
-
-      if player_row.chunk_while(&:==).any?{ |player| player.size == 4}
-        return player_row.max_by{ |player| player_row.count(player)}
-      end
-
-      x -= 1
-    end
-    :no_win
-  end
-
 end
-
-  # def column_win
-  #   x = 0
-  #   loop do
-  #     player_column = []
-  #     y = 5
-  #     loop do
-  #       player_column << columns[x].rows[y].player
-  #       if player_column.each_index.select{|i| player_column[i] == "Bryan" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-  #         return "Bryan"
-  #         break
-  #       elsif player_column.each_index.select{|i| player_column[i] == "Mostafa" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-  #         return "Mostafa"
-  #         break
-  #       end
-  #       y -= 1
-  #       break if y == 0
-  #     end
-  #   x += 1
-  #   break if x == 6
-  #   end     
-  # end
-
-
-
 #Board array to string reference key:
 #column[0].row[0] is layout[16]
 #column[6].row[0] is layout[28]
