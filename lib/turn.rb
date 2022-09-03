@@ -1,8 +1,8 @@
 class Turn
-    attr_reader :user_selection
+    attr_reader :user_selection, :board
 
     def initialize(player, board)
-        @column_conversion = {'A' => 0, 'B' => 1, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7}
+        @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
         @user_selection = []
         @board = board
         @player = player
@@ -39,7 +39,7 @@ class Turn
         y = 0
   
         7.times do
-          player_row <<columns[y].rows[x].player
+          player_row << @board.columns[y].rows[x].player
           y += 1
         end
   
@@ -54,25 +54,25 @@ class Turn
   
   # end
   
-  #   # def column_win
-  #   #   x = 0
-  #   #   loop do
-  #   #     player_column = []
-  #   #     y = 5
-  #   #     loop do
-  #   #       player_column << columns[x].rows[y].player
-  #   #       if player_column.each_index.select{|i| player_column[i] == "Bryan" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-  #   #         return "Bryan"
-  #   #         break
-  #   #       elsif player_column.each_index.select{|i| player_column[i] == "Mostafa" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-  #   #         return "Mostafa"
-  #   #         break
-  #   #       end
-  #   #       y -= 1
-  #   #       break if y == 0
-  #   #     end
-  #   #   x += 1
-  #   #   break if x == 6
-  #   #   end     
-  #   # end
+    # def column_win
+    #   x = 0
+    #   loop do
+    #     player_column = []
+    #     y = 5
+    #     loop do
+    #       player_column << columns[x].rows[y].player
+    #       if player_column.each_index.select{|i| player_column[i] == "Bryan" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
+    #         return "Dog"
+    #         break
+    #       elsif player_column.each_index.select{|i| player_column[i] == "Mostafa" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
+    #         return "Mostafa"
+    #         break
+    #       end
+    #       y -= 1
+    #       break if y == 0
+    #     end
+    #   x += 1
+    #   break if x == 6
+    #   end     
+    # end
 end

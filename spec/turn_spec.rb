@@ -20,7 +20,7 @@ RSpec.describe Turn do
       turn = Turn.new('Bryan', board)
         
         expect(turn.column_select('A')).to eq([0, 'Bryan'])
-        expect(turn.column_select('E')).to eq([5, 'Bryan'])
+        expect(turn.column_select('E')).to eq([4, 'Bryan'])
 
     end
 
@@ -28,7 +28,6 @@ RSpec.describe Turn do
 
       board = Board.new
       turn = Turn.new('Bryan', board)
-        # board.generate_columns
         turn.column_select('A')
         expect(board.columns[0].rows[5].playable).to eq(true)
         expect(board.columns[0].rows[5].player).to eq('')
@@ -43,7 +42,6 @@ RSpec.describe Turn do
 
       board = Board.new
       turn = Turn.new('Bryan', board)
-        #board.generate_columns
         turn.column_select('A')
         expect(board.columns[0].rows[5].playable).to eq(true)
         expect(board.columns[0].rows[5].player).to eq('')
@@ -67,7 +65,6 @@ RSpec.describe Turn do
         
       board = Board.new
       turn = Turn.new('Bryan', board)
-        #board.generate_columns
         turn.column_select('A')
 
         6.times do
@@ -85,7 +82,6 @@ RSpec.describe Turn do
 
       board = Board.new
       turn = Turn.new('Bryan', board)
-      #board.generate_columns
   
       turn.column_select('A')
       4.times do
@@ -96,141 +92,150 @@ RSpec.describe Turn do
   
     end
   
-    xit '10. checks other columns for vertical wins' do
-      turn = Turn.new
-      board = Board.new('Bryan', 'Mostafa')
-      #board.generate_columns
-  
-      turn.column_select('D', 'Bryan')    
+    it '10. checks other columns for vertical wins' do
+
+      board = Board.new
+      turn1 = Turn.new('Bryan', board)
+      turn2 = Turn.new('Mostafa', board)
+      
+      turn1.column_select('D')    
       2.times do
-        board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+        board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
       end
   
-      turn.column_select('D', 'Mostafa')
+      turn2.column_select('D')
       4.times do
-        board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+        board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
       end
-  
-      expect(board.column_win).to eq('Mostafa')
-  
-    end
-  
-    xit '11. does not give false positives for vertical wins' do
-      turn = Turn.new
-      board = Board.new('Bryan', 'Mostafa')
-      #board.generate_columns
-  
-      turn.column_select('D', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('D', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-  
-      expect(board.column_win).to eq(:no_win)
+      
+      expect(turn1.column_win).to eq('Mostafa')
+      expect(turn2.column_win).to eq('Mostafa')
   
     end
   
-    xit '12. checks first row for horizontal win' do
-      turn = Turn.new
-      board = Board.new('Bryan', 'Mostafa')
-      #board.generate_columns
+    it '11. does not give false positives for vertical wins' do
+
+      board = Board.new
+      turn1 = Turn.new('Bryan', board)
+      turn2 = Turn.new('Mostafa', board)
   
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn1.column_select('D')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('D')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
   
-      expect(board.row_win).to eq('Mostafa')
+      expect(turn1.column_win).to eq(:no_win)
+      expect(turn2.column_win).to eq(:no_win)
   
     end
   
-    xit '13. checks other rows for horizontal win' do
-      turn = Turn.new
-      board = Board.new('Bryan', 'Mostafa')
-      #board.generate_columns
+    it '12. checks first row for horizontal win' do
+
+      board = Board.new
+      turn1 = Turn.new('Bryan', board)
+      turn2 = Turn.new('Mostafa', board)
+  
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('C')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('E')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('F')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    
+      expect(turn1.row_win).to eq('Mostafa')
+      expect(turn2.row_win).to eq('Mostafa')
+  
+    end
+  
+    it '13. checks other rows for horizontal win' do
+
+      board = Board.new
+      turn1 = Turn.new('Bryan', board)
+      turn2 = Turn.new('Mostafa', board)
   
       #row 1
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('C')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('E')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('F')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
   
       #row 2
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('C')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('E')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('F')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
   
       #row 3 - winning row
-      turn.column_select('D', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn1.column_select('D')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn1.column_select('C')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn1.column_select('E')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn1.column_select('F')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
   
-      expect(board.row_win).to eq('Bryan')
+      expect(turn1.row_win).to eq('Bryan')
+      expect(turn2.row_win).to eq('Bryan')
   
     end
   
-    xit '14. does not return false positives for horizontal wins' do
-  
-      turn = Turn.new
-      board = Board.new('Bryan', 'Mostafa')
-      #board.generate_columns
+    it '14. does not return false positives for horizontal wins' do
+
+      board = Board.new
+      turn1 = Turn.new('Bryan', board)
+      turn2 = Turn.new('Mostafa', board)
   
       #row 1
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('C')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('E')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('F')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
   
       #row 2
-      turn.column_select('D', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn2.column_select('D')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('C')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('E')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn2.column_select('F')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
   
       #row 3 - winning row
-      turn.column_select('D', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('C', 'Mostafa')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('E', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-      turn.column_select('F', 'Bryan')
-      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+      turn1.column_select('D')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn2.column_select('C')
+      board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+      turn1.column_select('E')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+      turn1.column_select('F')
+      board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
   
-      expect(board.row_win).to eq(:no_win)
+      expect(turn1.row_win).to eq(:no_win)
+      expect(turn2.row_win).to eq(:no_win)
   
     end
     
