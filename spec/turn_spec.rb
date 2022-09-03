@@ -78,25 +78,6 @@ RSpec.describe Turn do
         
         #invalid player move here
         expect(board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])).to eq(puts 'That is an invalid move.')
-    end
-
-    xit '6. checks vertically for win conditions' do
-
-        turn = Turn.new
-        board = Board.new('Bryan', 'Mostafa')
-        board.generate_columns
-        turn.column_select('A', 'Bryan')
-
-        4.times do
-            board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
-        end
-
-        expect(turn.column_win).to eq(true)
-        expect(turn.winner).to eq('Bryan')
-
-    end
+    end 
     
-
-
-
 end

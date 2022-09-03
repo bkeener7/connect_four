@@ -8,22 +8,6 @@ class Turn
 
     def column_select (user_selection, player)
         @user_selection = [@column_conversion[user_selection], player]
-    end
-
-    # def column_win
-
-    # end
-
-    # def row_win
-
-    # end
-
-    # def diagonal_win
-        
-    # end
-
-    # def winner
-
-    # end
+    end   
 
 end

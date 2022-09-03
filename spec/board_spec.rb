@@ -1,7 +1,8 @@
 require 'rspec'
 require './lib/row'
 require './lib/column'
-require'./lib/board'
+require './lib/board'
+require './lib/turn'
 require 'pry'
 
 RSpec.describe Board do
@@ -71,6 +72,63 @@ RSpec.describe Board do
       expect(board.layout).to eq("\n\nA B C D E F G\n. . . . . . o\n. . . . . . o\n. . . . . . o\nx . . . . . o\nx . . . . . o\nx . . . . . o\n\n")
       expect(board.print_layout).to eq(print "\n\nA B C D E F G\n. . . . . . o\n. . . . . . o\n. . . . . . o\nx . . . . . o\nx . . . . . o\nx . . . . . o\n\n")
   end
+
+  it '9. checks first row for vertical win' do
+
+    turn = Turn.new
+    board = Board.new('Bryan', 'Mostafa')
+    board.generate_columns
+
+    turn.column_select('A', 'Bryan')
+    4.times do
+        board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    end
+
+    expect(board.column_win).to eq('Bryan')
+
+  end
+
+  it '10. checks other rows for vertical wins' do
+    turn = Turn.new
+    board = Board.new('Bryan', 'Mostafa')
+    board.generate_columns
+
+    turn.column_select('D', 'Bryan')    
+    2.times do
+      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    end
+
+    turn.column_select('D', 'Mostafa')
+    4.times do
+      board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    end
+
+    expect(board.column_win).to eq('Mostafa')
+
+  end
+
+  it '11. does not give false positives for vertical wins' do
+    turn = Turn.new
+    board = Board.new('Bryan', 'Mostafa')
+    board.generate_columns
+
+    turn.column_select('D', 'Bryan')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    turn.column_select('D', 'Mostafa')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    turn.column_select('D', 'Bryan')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    turn.column_select('D', 'Mostafa')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    turn.column_select('D', 'Mostafa')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+    turn.column_select('D', 'Mostafa')
+    board.columns[turn.user_selection[0]].play_piece(turn.user_selection[1])
+
+    expect(board.column_win).to eq(:no_win)
+
+  end
+
 end
 
 
