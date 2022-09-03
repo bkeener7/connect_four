@@ -5,7 +5,6 @@ require'./lib/board'
 require 'pry'
 
 RSpec.describe Board do
-
   it "1. exists" do
     board = Board.new("Megan", "Hod")
 

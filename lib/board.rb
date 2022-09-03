@@ -1,5 +1,4 @@
 class Board
-
   attr_reader :columns,
               :player_1,
               :player_2,

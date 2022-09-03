@@ -17,5 +17,4 @@ class Row
         else :invalid_move #evaluate later where best location is for this          
         end
     end
-    
 end
