@@ -75,31 +75,27 @@ class Board
     :no_win
   end
 
+  def row_win
+    x = 5
+    6.times do
+      player_row = []
+      y = 0
 
+      7.times do
+        player_row <<columns[y].rows[x].player
+        y += 1
+      end
 
+      if player_row.chunk_while(&:==).any?{ |player| player.size == 4}
+        return player_row.max_by{ |player| player_row.count(player)}
+      end
+
+      x -= 1
+    end
+    :no_win
+  end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   # def column_win
   #   x = 0
