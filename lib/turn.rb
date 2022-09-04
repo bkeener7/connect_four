@@ -51,28 +51,19 @@ class Turn
       end
       :no_win
     end
-  
-  # end
-  
-    # def column_win
-    #   x = 0
-    #   loop do
-    #     player_column = []
-    #     y = 5
-    #     loop do
-    #       player_column << columns[x].rows[y].player
-    #       if player_column.each_index.select{|i| player_column[i] == "Bryan" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-    #         return "Dog"
-    #         break
-    #       elsif player_column.each_index.select{|i| player_column[i] == "Mostafa" } == [0, 1, 2, 3] || [1, 2, 3, 4] || [2, 3, 4, 5]
-    #         return "Mostafa"
-    #         break
-    #       end
-    #       y -= 1
-    #       break if y == 0
-    #     end
-    #   x += 1
-    #   break if x == 6
-    #   end     
+
+    # def diagonal_leftup
+
     # end
+
+    # def diagonal_rightup
+
+    # end
+
+    # def connect_four
+
+    ## checks all 4 win conditions 
+
+    # end
+
 end
