@@ -1,69 +1,69 @@
 class Turn
-    attr_reader :user_selection, :board
+  attr_reader :user_selection, :board
 
-    def initialize(player, board)
-        @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
-        @user_selection = []
-        @board = board
-        @player = player
-    end
+  def initialize(player, board)
+    @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
+    @user_selection = []
+     @board = board
+    @player = player
+  end
 
-    def column_select (user_selection)
-        @user_selection = [@column_conversion[user_selection], @player]
-    end   
+  def column_select (user_selection)
+    @user_selection = [@column_conversion[user_selection], @player]
+  end   
 
-    def column_win
-      y = 0
-      7.times do
-        player_column = []
-        x = 5
-  
-        6.times do
-          player_column << @board.columns[y].rows[x].player
-          x -= 1
-        end
-  
-        if player_column.chunk_while(&:==).any?{ |player| player.size == 4}
-          return player_column.max_by{ |player| player_column.count(player)}
-        end
-        
-        y += 1
-      end
-      :no_win
-    end
-  
-    def row_win
+  def column_win
+    y = 0
+    7.times do
+      player_column = []
       x = 5
+
       6.times do
-        player_row = []
-        y = 0
-  
-        7.times do
-          player_row << @board.columns[y].rows[x].player
-          y += 1
-        end
-  
-        if player_row.chunk_while(&:==).any?{ |player| player.size == 4}
-          return player_row.max_by{ |player| player_row.count(player)}
-        end
-  
+        player_column << @board.columns[y].rows[x].player
         x -= 1
       end
-      :no_win
+
+      if player_column.chunk_while(&:==).any?{ |player| player.size == 4}
+        return player_column.max_by{ |player| player_column.count(player)}
+      end
+      
+      y += 1
     end
+    :no_win
+  end
+  
+  def row_win
+    x = 5
+    6.times do
+      player_row = []
+      y = 0
 
-    # def diagonal_leftup
+      7.times do
+        player_row << @board.columns[y].rows[x].player
+        y += 1
+      end
 
-    # end
+      if player_row.chunk_while(&:==).any?{ |player| player.size == 4}
+        return player_row.max_by{ |player| player_row.count(player)}
+      end
 
-    # def diagonal_rightup
+      x -= 1
+    end
+    :no_win
+  end
 
-    # end
+  # def diagonal_rightup
 
-    # def connect_four
+  # end
 
-    ## checks all 4 win conditions 
+  # def diagonal_leftup
 
-    # end
+  # end    
+
+  # def connect_four
+
+  ## checks all 4 win conditions 
+
+  # end
 
 end
