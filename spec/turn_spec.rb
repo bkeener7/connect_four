@@ -268,8 +268,53 @@ RSpec.describe Turn do
     #win condition is in arr4, or right_up[4]    
 
     expect(turn1.diagonal_rightup).to eq('Bryan')
-    expect(turn2.diagonal_rightup).to eq('Bryan')
+    expect(turn1.diagonal_leftup).to eq(:no_win)
     expect(turn1.connect_four).to eq('Bryan')
+
+  end
+
+  it '13. checks left and up diagonal wins' do
+    board = Board.new
+    turn1 = Turn.new('Mostafa', board)
+    turn2 = Turn.new('Bryan', board)
+
+    turn1.column_select('G')
+    board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+    turn2.column_select('F')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn1.column_select('F')
+    board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+    turn2.column_select('E')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn2.column_select('E')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn1.column_select('E')
+    board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+    turn2.column_select('D')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn2.column_select('D')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn2.column_select('D')
+    board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
+    turn1.column_select('D')
+    board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
+
+    expect(turn1.diagonal_rightup).to eq(:no_win)
+    expect(turn1.diagonal_leftup).to eq('Mostafa')
+    expect(turn1.connect_four).to eq('Mostafa')
+
+  end
+
+  it '14. does not confuse empty spaces for players' do
+    board = Board.new
+    turn1 = Turn.new('Mostafa', board)
+    turn2 = Turn.new('Bryan', board)
+
+    expect(turn1.column_win).to eq(:no_win)
+    expect(turn1.row_win).to eq(:no_win)
+    expect(turn1.diagonal_rightup).to eq(:no_win)
+    expect(turn1.diagonal_leftup).to eq(:no_win)
+    expect(turn1.connect_four).to eq(:no_win)    
 
   end
     
