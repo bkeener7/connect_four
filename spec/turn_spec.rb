@@ -88,6 +88,7 @@ RSpec.describe Turn do
     end
 
     expect(turn.column_win).to eq('Bryan')
+    expect(turn.connect_four).to eq('Bryan')
 
   end
 
@@ -108,6 +109,7 @@ RSpec.describe Turn do
     
     expect(turn1.column_win).to eq('Mostafa')
     expect(turn2.column_win).to eq('Mostafa')
+    expect(turn1.connect_four).to eq('Mostafa')
 
   end
 
@@ -131,6 +133,7 @@ RSpec.describe Turn do
 
     expect(turn1.column_win).to eq(:no_win)
     expect(turn2.column_win).to eq(:no_win)
+    expect(turn1.connect_four).to eq(:no_win)
 
   end
 
@@ -150,6 +153,7 @@ RSpec.describe Turn do
   
     expect(turn1.row_win).to eq('Mostafa')
     expect(turn2.row_win).to eq('Mostafa')
+    expect(turn1.connect_four).to eq('Mostafa')
 
   end
 
@@ -190,6 +194,7 @@ RSpec.describe Turn do
 
     expect(turn1.row_win).to eq('Bryan')
     expect(turn2.row_win).to eq('Bryan')
+    expect(turn1.connect_four).to eq('Bryan')
 
   end
 
@@ -230,10 +235,11 @@ RSpec.describe Turn do
 
     expect(turn1.row_win).to eq(:no_win)
     expect(turn2.row_win).to eq(:no_win)
+    expect(turn1.connect_four).to eq(:no_win)
 
   end
 
-  xit '12. checks right and up diagonal wins' do
+  it '12. checks right and up diagonal wins' do
     board = Board.new
     turn1 = Turn.new('Bryan', board)
     turn2 = Turn.new('Mostafa', board)
@@ -258,13 +264,12 @@ RSpec.describe Turn do
     board.columns[turn2.user_selection[0]].play_piece(turn2.user_selection[1])
     turn1.column_select('F')
     board.columns[turn1.user_selection[0]].play_piece(turn1.user_selection[1])
-
-
     
-    #win condition is in arr4, or right_up[4]
+    #win condition is in arr4, or right_up[4]    
 
     expect(turn1.diagonal_rightup).to eq('Bryan')
     expect(turn2.diagonal_rightup).to eq('Bryan')
+    expect(turn1.connect_four).to eq('Bryan')
 
   end
     
