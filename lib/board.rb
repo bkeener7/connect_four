@@ -7,9 +7,9 @@ class Board
               :layout_index,
               :layout
 
-  def initialize(player_1, player_2)
-    @player_1 = player_1
-    @player_2 = player_2 
+  def initialize
+    @player_1 = ""
+    @player_2 = ""
     @columns = []
     generate_columns
     @column_index = 0
@@ -54,10 +54,12 @@ class Board
      @layout_index += 2
     end
   end
-end
 
+end
 #Board array to string reference key:
 #column[0].row[0] is layout[16]
 #column[6].row[0] is layout[28]
 #column[0].row[1] is layout[30]
+
+
 
