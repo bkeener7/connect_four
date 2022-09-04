@@ -1,5 +1,5 @@
 class Turn
-  attr_reader :user_selection, :board
+  attr_reader :user_selection, :board, :player
 
   def initialize(player, board)
     @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
@@ -8,8 +8,8 @@ class Turn
     @player = player
   end
 
-  def column_select (user_selection)
-    @user_selection = [@column_conversion[user_selection], @player]
+  def column_select (user_input)
+    @user_selection = [@column_conversion[user_input], player]
   end   
 
   def column_win
@@ -19,7 +19,7 @@ class Turn
       x = 5
 
       6.times do
-        player_column << @board.columns[y].rows[x].player
+        player_column << board.columns[y].rows[x].player
         x -= 1
       end
 
@@ -39,7 +39,7 @@ class Turn
       y = 0
 
       7.times do
-        player_row << @board.columns[y].rows[x].player
+        player_row << board.columns[y].rows[x].player
         y += 1
       end
 
@@ -66,7 +66,6 @@ class Turn
     #corresponding: right_up[0][0], right_up[1][1], right_up[2][2], right_up[3][2], right_up[4][1], right_up[5][0]
     check_right = [right_up[0][0], right_up[1][1], right_up[2][2], right_up[3][2], right_up[4][1], right_up[5][0]]
     
-  
    if check_right.any? { |occupied| occupied.size > 0 }
       right_up.each do |arr|
         if arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.size == 4}       
