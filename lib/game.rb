@@ -2,16 +2,15 @@ class Game
   attr_reader :player_1,
               :player_2,
               :board,
-              :bot_choices
+              :column_choices
 
   def initialize
-    @player_1 = ""
-    @player_2 = ""
     @board = Board.new
     @is_bot = false
-    @bot_choices = ["A", "B", "C", "D", "E", "F", "G"]
+    @column_choices = ["A", "B", "C", "D", "E", "F", "G"]
     @player_1_turn = ""
     @player_2_turn = ""
+    @player_1_selection = ""
   end
 
   def user_input
@@ -22,8 +21,7 @@ class Game
     loop do
       print "\nPlayer 1, please enter your name.\n"
       @board.player_1 = user_input
-      @player_1 = @board.player_1
-      @player1 != "" ? break : (print "\nSorry. Please try again.")
+      @board.player_1 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
 
@@ -35,12 +33,12 @@ class Game
 
   def set_bot
     @is_bot = true
-    @player_2 = "Computer"
+    @board.player_2 = "Computer"
   end
 
   def bot_selection
-    @bot_choices = @bot_choices.shuffle
-    @bot_choices[0]
+    @column_choices = @column_choices.shuffle
+    @column_choices[0]
   end
 
   def welcome_message
@@ -74,45 +72,57 @@ class Game
   #   end
   # end
 
-  def player_turns
-    @player_1_turn = Turn.new(@player_1, @board) 
-    @player_2_turn = Turn.new(@player_2, @board)
-    @board.player_2 = "Computer"
+  def set_player_turns
+    @player_1_turn = Turn.new(@board.player_1, @board) 
+    @player_2_turn = Turn.new(@board.player_2, @board)
   end
-  
-  def game_sequence
+
+  def player_1_selection_loop
     loop do
-      @board.print_layout
-      player_1_selection = user_input
-      @player_1_turn.column_select(player_1_selection)
-      @board.update_layout
-      @board.print_layout
-      if @player_1_turn.connect_four == @board.player_1
-        print "\n #{@board.player_1} wins!"
-        break
-      end
-      computer_selection = bot_selection
-      @player_2_turn.column_select(computer_selection)
-      board.update_layout
-      if @player_2_turn.connect_four == @board.player_2
-        print "\n #{@board.player_2} wins!"
-        break
-      end
+      @player_1_selection = user_input
+      break if @column_choices.include?(@player_1_selection) == true
     end
   end
 
+  def player_1_turn_sequence
+    player_1_selection_loop
+    @player_1_turn.column_select(@player_1_selection)
+    @board.update_layout
+    @board.print_layout
+  end
 
-  #Switch player number/name references to @board ones
-  #Disable player parameter in Turn?
-  #Need to Restrict options in column select through loop
+  def bot_turn_sequence
+      computer_selection = bot_selection
+      @player_2_turn.column_select(computer_selection)
+      board.update_layout
+      @board.print_layout
+  end
+  
+  def game_sequence
+      player_1_turn_sequence
+      return (print "\n#{@board.player_1} wins!") if @player_1_turn.connect_four == @board.player_1
+      bot_turn_sequence
+      return (print "\n#{@board.player_2} wins!") if @player_2_turn.connect_four == @board.player_2
+  end
+
+
+  #Switched player number/name references to @board ones
+  #Restricted options in column select through loop
   #Need to make column selection not case sensitive
+  #Need to make bot play again if selected full column
 
-
+  def game_start_setup
+    main_menu
+    set_player_turns
+    @board.print_layout
+  end
 
   def start
-    main_menu
-    player_turns
-    game_sequence
+    game_start_setup
+    loop do
+      game_sequence
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2
+    end
   end
 
 
