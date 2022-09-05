@@ -1,62 +1,129 @@
 class Game 
   attr_reader :player_1,
-              :player_2
+              :player_2,
+              :board,
+              :column_choices
 
   def initialize
-    @player_1 = ""
-    @player_2 = ""
+    @board = Board.new
+    @is_bot = false
+    @column_choices = ["A", "B", "C", "D", "E", "F", "G"]
+    @player_1_turn = ""
+    @player_2_turn = ""
+    @player_1_selection = ""
+    @turn_count = 1
   end
 
-  def set_bot
-    @player_2 ="Computer"
-  end
-
-  def main_menu_message
-    "\nWelcome to CONNECT FOUR\nEnter p to play. Enter q to quit.\n"
-  end
-  #^there due to limitation on testing methods with user input.
-
-  def main_menu
-    print main_menu_message
-    if gets.chomp == "q"
-      abort ":("
-    elsif gets.chomp == "p"
-      set_player1
-    else
-      print "\nSorry, please try again.\n"
-    end
-  end
-
-  def main_menu_loop
-    loop do
-      main_menu
-      if @player1 != ""
-        break
-      end
-    end
+  def user_input
+    gets.chomp
   end
 
   def set_player1
     loop do
       print "\nPlayer 1, please enter your name.\n"
-      @player1 = gets.chomp
-      if @player1 != ""    #note to self test one line
-        break
-      else 
-        print "\nSorry. Please try again."
-      end
+      @board.player_1 = user_input
+      @board.player_1 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
 
-  def start
-    main_menu_loop
-    # turn = Turn.new(user_input,player1, player2)
+  #Reuse above for setting player2 
+
+  def is_bot?
+    @is_bot
   end
 
-  # def set_player2
-  # print "\nPlayer 2, please enter your name.\n"
-  # @player2 = gets.chomp
-  # end
+  def set_bot
+    @is_bot = true
+    @board.player_2 = "Computer"
+  end
+
+  def bot_selection
+    @turn_count += 1
+    @column_choices = @column_choices.shuffle
+    @column_choices[0]
+  end
+
+  def welcome_message
+    "\nWelcome to CONNECT FOUR\nEnter p to play. Enter q to quit.\n"
+  end
+
+  def main_menu_user_input
+    choice = user_input
+    if choice == "p"
+      set_player1
+      set_bot
+    elsif choice == "q"
+      abort ":("
+    else
+      print "\nSorry, please try again.\n"
+    end
+  end
+
+  # a = ("a" if foo) || ("b" if bar) || "c"
+
+  # if foo 'a' elsif bar 'b' else 'c' syntax to help me refactor later -Mostafa
+
+  def main_menu
+    print welcome_message
+    main_menu_user_input
+  end
+
+  def set_player_turns
+    @player_1_turn = Turn.new(@board.player_1, @board) 
+    @player_2_turn = Turn.new(@board.player_2, @board)
+  end
+
+  def player_1_selection_loop
+    loop do
+      print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:"
+      @player_1_selection = user_input
+      break if @column_choices.include?(@player_1_selection) == true
+    end
+  end
+
+  def player_1_turn_sequence
+    player_1_selection_loop
+    @player_1_turn.column_select(@player_1_selection)
+    @turn_count += 1
+    @board.update_layout
+    @board.print_layout
+  end
+
+  def bot_turn_sequence
+      print "\nTurn #{@turn_count} - Computer turn:"
+      computer_selection = bot_selection
+      @player_2_turn.column_select(computer_selection)
+      board.update_layout
+      @board.print_layout
+  end
+  
+  def game_sequence
+      player_1_turn_sequence
+      return (print "\n#{@board.player_1} wins!") if @player_1_turn.connect_four == @board.player_1
+      bot_turn_sequence
+      return (print "\n#{@board.player_2} wins!") if @player_2_turn.connect_four == @board.player_2
+  end
+
+
+  #Switched player number/name references to @board ones - done
+  #Restricted options in column select through loop - done
+  #Need to make column selection not case sensitive - not yet
+  #Need to make bot play again if selected full column - not yet
+
+  def game_start_setup
+    main_menu
+    set_player_turns
+    @board.print_layout
+  end
+
+  def start
+    game_start_setup
+    loop do
+      game_sequence
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2
+    end
+  end
+
 
   # def choose_opponent_prompt
   #   "\nType 'Computer' to play against computer or 'Player' to play against another player\n"

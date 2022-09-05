@@ -1,11 +1,12 @@
 class Board
   attr_reader :columns,
-              :player_1,
-              :player_2,
               :column_index,
               :row_index,
               :layout_index,
               :layout
+
+  attr_accessor :player_1,
+                :player_2
 
   def initialize
     @player_1 = ""
@@ -36,10 +37,12 @@ class Board
   end
 
   def board_logic
-    if @columns[@column_index].rows[@row_index].player == @player_1
+    if @columns[@column_index].rows[@row_index].player == @player_1 && @columns[@column_index].rows[@row_index].player != ""
       @layout[@layout_index] = "x"
-    elsif @columns[@column_index].rows[@row_index].player == @player_2
+    elsif @columns[@column_index].rows[@row_index].player == @player_2 && @columns[@column_index].rows[@row_index].player != ""
       @layout[@layout_index] = "o"
+    else
+      @layout[@layout_index] = "."
     end
   end
 
