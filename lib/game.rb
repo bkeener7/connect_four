@@ -14,10 +14,15 @@ class Game
     @player_2_turn = ""
   end
 
+  def user_input
+    gets.chomp
+  end
+
   def set_player1
     loop do
       print "\nPlayer 1, please enter your name.\n"
-      @player1 = gets.chomp
+      @board.player_1 = user_input
+      @player_1 = @board.player_1
       @player1 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
@@ -43,11 +48,12 @@ class Game
   end
 
   def main_menu_user_input
-    if gets.chomp == "q"
-      abort ":("
-    elsif gets.chomp == "p"
+    choice = user_input
+    if choice == "p"
       set_player1
       set_bot
+    elsif choice == "q"
+      abort ":("
     else
       print "\nSorry, please try again.\n"
     end
@@ -62,32 +68,51 @@ class Game
     main_menu_user_input
   end
 
-  def main_menu_loop
-    loop do
-      main_menu
-    end
-  end
+  # def main_menu_loop
+  #   loop do
+  #     main_menu
+  #   end
+  # end
 
   def player_turns
-    @player_1_turn = Turn.new(@player_1, @board)
+    @player_1_turn = Turn.new(@player_1, @board) 
     @player_2_turn = Turn.new(@player_2, @board)
+    @board.player_2 = "Computer"
   end
   
   def game_sequence
     loop do
-      @player_1_turn.column_select(gets.chomp)
-      #check win conditions and break accordingly
+      @board.print_layout
+      player_1_selection = user_input
+      @player_1_turn.column_select(player_1_selection)
+      @board.update_layout
+      @board.print_layout
+      if @player_1_turn.connect_four == @board.player_1
+        print "\n #{@board.player_1} wins!"
+        break
+      end
       computer_selection = bot_selection
       @player_2_turn.column_select(computer_selection)
-      #check win conditions and break accordingly
+      board.update_layout
+      if @player_2_turn.connect_four == @board.player_2
+        print "\n #{@board.player_2} wins!"
+        break
+      end
     end
   end
 
 
+  #Switch player number/name references to @board ones
+  #Disable player parameter in Turn?
+  #Need to Restrict options in column select through loop
+  #Need to make column selection not case sensitive
+
+
 
   def start
-    main_menu_loop
+    main_menu
     player_turns
+    game_sequence
   end
 
 
