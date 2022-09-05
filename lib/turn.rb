@@ -9,7 +9,8 @@ class Turn
   end
 
   def column_select (user_input)
-    @user_selection = [@column_conversion[user_input], player]
+    @user_selection = [@column_conversion[user_input], @player]
+    @board.columns[@user_selection[0]].play_piece(@user_selection[1])
   end   
 
   def column_win
