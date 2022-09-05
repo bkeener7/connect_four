@@ -11,6 +11,7 @@ class Game
     @player_1_turn = ""
     @player_2_turn = ""
     @player_1_selection = ""
+    @turn_count = 1
   end
 
   def user_input
@@ -37,6 +38,7 @@ class Game
   end
 
   def bot_selection
+    @turn_count += 1
     @column_choices = @column_choices.shuffle
     @column_choices[0]
   end
@@ -66,12 +68,6 @@ class Game
     main_menu_user_input
   end
 
-  # def main_menu_loop
-  #   loop do
-  #     main_menu
-  #   end
-  # end
-
   def set_player_turns
     @player_1_turn = Turn.new(@board.player_1, @board) 
     @player_2_turn = Turn.new(@board.player_2, @board)
@@ -79,6 +75,7 @@ class Game
 
   def player_1_selection_loop
     loop do
+      print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:"
       @player_1_selection = user_input
       break if @column_choices.include?(@player_1_selection) == true
     end
@@ -87,11 +84,13 @@ class Game
   def player_1_turn_sequence
     player_1_selection_loop
     @player_1_turn.column_select(@player_1_selection)
+    @turn_count += 1
     @board.update_layout
     @board.print_layout
   end
 
   def bot_turn_sequence
+      print "\nTurn #{@turn_count} - Computer turn:"
       computer_selection = bot_selection
       @player_2_turn.column_select(computer_selection)
       board.update_layout
@@ -106,10 +105,10 @@ class Game
   end
 
 
-  #Switched player number/name references to @board ones
-  #Restricted options in column select through loop
-  #Need to make column selection not case sensitive
-  #Need to make bot play again if selected full column
+  #Switched player number/name references to @board ones - done
+  #Restricted options in column select through loop - done
+  #Need to make column selection not case sensitive - not yet
+  #Need to make bot play again if selected full column - not yet
 
   def game_start_setup
     main_menu
