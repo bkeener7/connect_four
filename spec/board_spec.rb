@@ -54,11 +54,13 @@ RSpec.describe Board do
       expect(board.print_layout).to eq(print "\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\n")
   end
 
-  xit "8. changes dots on the board to 'x' for player 1 or 'o' for player 2" do
+  it "8. changes dots on the board to 'x' for player 1 or 'o' for player 2" do
       board = Board.new
+      board.player_1 = "Megan"
+      board.player_2 = "Hod"
       expect(board.layout).to eq("\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\n")
 
-      
+      expect(board.player_1). to eq("Megan")
       3.times do
         board.columns[0].play_piece("Megan")
       end
