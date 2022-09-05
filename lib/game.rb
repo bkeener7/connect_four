@@ -15,7 +15,7 @@ class Game
   end
 
   def user_input
-    gets.chomp
+    gets.chomp.upcase
   end
 
   def set_player1
