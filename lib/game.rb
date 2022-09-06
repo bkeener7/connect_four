@@ -60,10 +60,6 @@ class Game
     end
   end
 
-  # a = ("a" if foo) || ("b" if bar) || "c"
-
-  # if foo 'a' elsif bar 'b' else 'c' syntax to help me refactor later -Mostafa
-
   def main_menu
     print welcome_message
     loop do
@@ -107,15 +103,6 @@ class Game
       return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
   end
 
-
-  #Switched player number/name references to @board ones - done
-  #Restricted options in column select through loop - done
-  #Need to make column selection not case sensitive - not yet
-  #Need to make bot play again if selected full column - not yet
-  #add draw condition and print
-  #game returns user back to main menu - done
-  #Fixed bug where user could not type p and still proceed to play game.
-
   def game_start_setup
     main_menu
     set_player_turns
@@ -150,3 +137,13 @@ class Game
   #^there due to limitation on testing methods with user input.
 
 end
+
+
+#Need to make column selection not case sensitive - incomplete
+#Need to make bot play again if selected full column - incomplete
+#Need to add draw condition and print
+
+
+  #Syntax reminder for Mostafa: a = ("a" if foo) || ("b" if bar) || "c"
+
+  # if foo 'a' elsif bar 'b' else 'c' syntax to help me refactor later -Mostafa
