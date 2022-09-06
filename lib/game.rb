@@ -109,6 +109,7 @@ class Game
       return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
       bot_turn_sequence
       return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
+      return (print "Draw. No winner!") if @player_2_turn.connect_four == :stalemate
   end
 
   def game_start_setup
@@ -120,7 +121,7 @@ class Game
   def game_sequence
     loop do
       game_logic
-      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 ||@player_2_turn.connect_four == :stalemate
     end
   end
 
@@ -146,18 +147,3 @@ class Game
 
 end
 
-
-#Need to make bot play again if selected full column - incomplete
-
-
-
-  #Syntax reminder for Mostafa: a = ("a" if foo) || ("b" if bar) || "c"
-
-  # if foo 'a' elsif bar 'b' else 'c' syntax to help me refactor later -Mostafa
-
-  # def bot_selection_loop
-  #   loop do
-  #     computer_selection = bot_selection
-  #     return @player_2_turn.column_select(computer_selection) if @player_2_turn.column_select(computer_selection) != :invalid_move
-  #   end
-  # end
