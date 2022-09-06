@@ -14,7 +14,7 @@ class Row
         if  @playable == true
             @player = player
             toggle_playable
-        else :invalid_move #evaluate later where best location is for this          
+        else :invalid_move         
         end
     end
 end

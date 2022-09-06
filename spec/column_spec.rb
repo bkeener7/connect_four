@@ -57,7 +57,7 @@ RSpec.describe Column do
     #This is the end of valid playing options for this column. Next attempt for a move
     #here should result in an error
     expect(column.count).to eq(0)
-    expect(column.play_piece("Bryan")).to eq(puts "That is an invalid move.")
+    expect(column.play_piece("Bryan")).to eq(:invalid_move)
   end
 
   it '5. adds player name to row when playing piece' do

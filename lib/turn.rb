@@ -1,5 +1,5 @@
 class Turn
-  attr_reader :user_selection, :board, :player
+  attr_reader :user_selection, :board, :player, :column_conversion
 
   def initialize(player, board)
     @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
@@ -9,8 +9,8 @@ class Turn
   end
 
   def column_select (user_input)
-    @user_selection = [@column_conversion[user_input], @player]
-    @board.columns[@user_selection[0]].play_piece(@user_selection[1])
+    @user_selection = [column_conversion[user_input], player]
+    board.columns[user_selection[0]].play_piece(user_selection[1])
   end   
 
   def column_win
@@ -24,8 +24,8 @@ class Turn
         x -= 1
       end
 
-      if player_column.chunk_while{ |a, b| a == b && a != "" }.any?{ |player| player.size == 4}
-        return player_column.max_by{ |player| player_column.count(player)}
+      if player_column.chunk_while{ |a, b| a == b && a != "" }.any?{ |player| player.size >= 4 }
+        return player_column.max_by{ |player| player_column.count(player) }
       end
       
       y += 1
@@ -44,8 +44,8 @@ class Turn
         y += 1
       end
 
-      if player_row.chunk_while{ |a, b| a == b && a != "" }.any?{ |player| player.size == 4}
-        return player_row.max_by{ |player| player_row.count(player)}
+      if player_row.chunk_while{ |a, b| a == b && a != "" }.any?{ |player| player.size >= 4 }
+        return player_row.max_by{ |player| player_row.count(player) }
       end
 
       x -= 1
@@ -69,8 +69,8 @@ class Turn
     
    if check_right.any? { |occupied| occupied.size > 0 }
       right_up.each do |arr|
-        if arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.size == 4}       
-          return arr.max_by{ |player| arr.count(player)}
+        if arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.size >= 4 }       
+          return arr.max_by{ |player| arr.count(player) }
         end             
       end    
     end
@@ -93,18 +93,30 @@ class Turn
 
     if check_left.any? { |occupied| occupied.size > 0 }
       left_up.each do |arr|
-        if arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.size == 4}       
-          return arr.max_by{ |player| arr.count(player)}
+        if arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.size >= 4 }       
+          return arr.max_by{ |player| arr.count(player) }
         end             
       end    
     end
     :no_win
-  end    
+  end
+
+  
+  def stalemate_check
+    #check top array at end of connect_four if :no_win and if all full then :stalemate
+    arr_top = [board.columns[0].rows[0].player, board.columns[1].rows[0].player, board.columns[2].rows[0].player, board.columns[3].rows[0].player, board.columns[4].rows[0].player, board.columns[5].rows[0].player, board.columns[6].rows[0].player]
+    
+    if arr_top.all?{ |occupied| occupied != "" }
+      :stalemate
+    end
+  end
 
   def connect_four
     win_check = [column_win, row_win, diagonal_rightup, diagonal_leftup]
     if win_check.any?{ |win| win != :no_win }
       return win_check.tally.invert[1]
+    elsif stalemate_check == :stalemate
+      return :stalemate
     end
     :no_win
   end
