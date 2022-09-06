@@ -52,6 +52,7 @@ class Game
     if choice == "p"
       set_player1
       set_bot
+      "p"
     elsif choice == "q"
       abort ":("
     else
@@ -65,7 +66,9 @@ class Game
 
   def main_menu
     print welcome_message
-    main_menu_user_input
+    loop do
+      break if main_menu_user_input == "p"
+    end
   end
 
   def set_player_turns
@@ -75,7 +78,7 @@ class Game
 
   def player_1_selection_loop
     loop do
-      print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:"
+      print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:\n"
       @player_1_selection = user_input
       break if @column_choices.include?(@player_1_selection) == true
     end
@@ -97,11 +100,11 @@ class Game
       @board.print_layout
   end
   
-  def game_sequence
+  def game_logic
       player_1_turn_sequence
-      return (print "\n#{@board.player_1} wins!") if @player_1_turn.connect_four == @board.player_1
+      return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
       bot_turn_sequence
-      return (print "\n#{@board.player_2} wins!") if @player_2_turn.connect_four == @board.player_2
+      return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
   end
 
 
@@ -109,6 +112,9 @@ class Game
   #Restricted options in column select through loop - done
   #Need to make column selection not case sensitive - not yet
   #Need to make bot play again if selected full column - not yet
+  #add draw condition and print
+  #game returns user back to main menu - done
+  #Fixed bug where user could not type p and still proceed to play game.
 
   def game_start_setup
     main_menu
@@ -116,11 +122,24 @@ class Game
     @board.print_layout
   end
 
-  def start
-    game_start_setup
+  def game_sequence
     loop do
-      game_sequence
+      game_logic
       break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2
+    end
+  end
+
+  def game_reset
+    @turn_count = 1
+    @board = Board.new
+
+  end
+
+  def start
+    loop do
+      game_start_setup
+      game_sequence
+      game_reset
     end
   end
 
