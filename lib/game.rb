@@ -15,7 +15,9 @@ class Game
   end
 
   def user_input
-    gets.chomp.upcase
+    input = gets.chomp
+    abort if input.upcase == "QUIT"
+    input
   end
 
   def set_player1
@@ -44,16 +46,16 @@ class Game
   end
 
   def welcome_message
-    "\nWelcome to CONNECT FOUR\nEnter p to play. Enter q to quit.\n"
+    "\nWelcome to CONNECT FOUR\nEnter 'P' to play. Enter 'QUIT' to exit at anytime.\n"
   end
 
   def main_menu_user_input
     choice = user_input
-    if choice == "p"
+    if choice.upcase == "P"
       set_player1
       set_bot
-      "p"
-    elsif choice == "q"
+      "P"
+    elsif choice.upcase == "QUIT"
       abort ":("
     else
       print "\nSorry, please try again.\n"
@@ -63,7 +65,7 @@ class Game
   def main_menu
     print welcome_message
     loop do
-      break if main_menu_user_input == "p"
+      break if main_menu_user_input == "P"
     end
   end
 
@@ -76,13 +78,13 @@ class Game
     loop do
       print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:\n"
       @player_1_selection = user_input
-      break if @column_choices.include?(@player_1_selection) == true
+      break if @column_choices.include?(@player_1_selection.upcase) == true
     end
   end
 
   def player_1_turn_sequence
     player_1_selection_loop
-    @player_1_turn.column_select(@player_1_selection)
+    @player_1_turn.column_select(@player_1_selection.upcase)
     @turn_count += 1
     @board.update_layout
     @board.print_layout
@@ -98,6 +100,7 @@ class Game
   
   def game_logic
       player_1_turn_sequence
+      
       return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
       bot_turn_sequence
       return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
@@ -139,7 +142,6 @@ class Game
 end
 
 
-#Need to make column selection not case sensitive - incomplete
 #Need to make bot play again if selected full column - incomplete
 #Need to add draw condition and print
 
