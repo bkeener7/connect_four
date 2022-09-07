@@ -24,7 +24,16 @@ class Game
   end
 
   def choose_opponent_prompt
-    "\nType 'C' to play against computer or 'P' to play against another player\n"
+    "\nType 'C' to play against computer or 'P' to play against another player.\n"
+  end
+
+  def gets_stats(stat_request)
+   if stat_request.upcase == @timer.player1_stats[:player_name].upcase
+      @timer.print_player1_stats
+    elsif stat_request.upcase == @timer.player2_stats[:player_name].upcase
+      @timer.print_player2_stats
+    else print "\nWin a game to start gathering stats!"
+    end
   end
 
   def choose_opponent
@@ -51,6 +60,8 @@ class Game
     loop do
       print "\nPlayer 1, please enter your name.\n"
       @board.player_1 = user_input
+      print "\nHi #{@board.player_1}! Press 'S' to see stats or press any other key to continue.\n"
+      puts gets_stats(@board.player_1) if user_input.upcase == "S"
       @board.player_1 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
@@ -59,6 +70,8 @@ class Game
     loop do
       print "\nPlayer 2, please enter your name.\n"
       @board.player_2 = user_input
+      print "\nHi #{@board.player_2}! Press 'S' to see stats or press any other key to continue.\n"
+      puts gets_stats(@board.player_2) if user_input.upcase == "S"
       @board.player_2 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
@@ -196,10 +209,7 @@ class Game
       game_start_setup
       @timer.time_start
       game_sequence
-      # require 'pry';binding.pry
       game_reset
     end
   end
 end
-
-# Need to add option to check stats. will be timer.player_stats
