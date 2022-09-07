@@ -57,8 +57,8 @@ class Board
      @layout_index += 2
     end
   end
-
 end
+
 #Board array to string reference key:
 #column[0].row[0] is layout[16]
 #column[6].row[0] is layout[28]

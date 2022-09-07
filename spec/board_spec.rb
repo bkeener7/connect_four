@@ -3,7 +3,6 @@ require './lib/row'
 require './lib/column'
 require './lib/board'
 require './lib/turn'
-require 'pry'
 
 RSpec.describe Board do
   it "1. exists" do

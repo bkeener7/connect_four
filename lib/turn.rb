@@ -120,5 +120,4 @@ class Turn
     end
     :no_win
   end
-
 end

@@ -4,6 +4,7 @@ class Game
               :board,
               :column_choices,
               :turn_count
+              :timer
 
   def initialize
     @board = Board.new
@@ -13,6 +14,7 @@ class Game
     @player_2_turn = ""
     @player_1_selection = ""
     @turn_count = 1
+    @timer = Timer.new
   end
 
   def user_input
@@ -22,14 +24,23 @@ class Game
   end
 
   def choose_opponent_prompt
-    "\nType 'Computer' to play against computer or 'Player' to play against another player\n"
+    "\nType 'C' to play against computer or 'P' to play against another player.\n"
+  end
+
+  def gets_stats(stat_request)
+   if stat_request.upcase == @timer.player1_stats[:player_name].upcase
+      @timer.print_player1_stats
+    elsif stat_request.upcase == @timer.player2_stats[:player_name].upcase
+      @timer.print_player2_stats
+    else print "\nWin a game to start gathering stats!"
+    end
   end
 
   def choose_opponent
     opponent_choice = user_input
-    if opponent_choice.upcase == "COMPUTER"
+    if opponent_choice.upcase == "C"
       set_bot
-    elsif opponent_choice.upcase == "PLAYER"
+    elsif opponent_choice.upcase == "P"
       set_player_2
     else 
       print "\nInvalid selection.\n"
@@ -49,6 +60,8 @@ class Game
     loop do
       print "\nPlayer 1, please enter your name.\n"
       @board.player_1 = user_input
+      print "\nHi #{@board.player_1}! Press 'S' to see stats or press any other key to continue.\n"
+      puts gets_stats(@board.player_1) if user_input.upcase == "S"
       @board.player_1 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
@@ -57,6 +70,8 @@ class Game
     loop do
       print "\nPlayer 2, please enter your name.\n"
       @board.player_2 = user_input
+      print "\nHi #{@board.player_2}! Press 'S' to see stats or press any other key to continue.\n"
+      puts gets_stats(@board.player_2) if user_input.upcase == "S"
       @board.player_2 != "" ? break : (print "\nSorry. Please try again.")
     end
   end
@@ -159,9 +174,15 @@ class Game
   
   def game_logic
       player_1_turn_sequence
-      return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
+      if @player_1_turn.connect_four == @board.player_1
+        @timer.record_win(@board.player_1)
+        return (print "\n#{@board.player_1} wins!\n") 
+      end
       bot_turn_sequence if is_bot? == true || player_2_turn_sequence
-      return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
+      if @player_2_turn.connect_four == @board.player_2
+        @timer.record_win(@board.player_2)
+        return (print "\n#{@board.player_2} wins!\n") 
+      end
       return (print "Draw. No winner!") if @player_2_turn.connect_four == :stalemate
   end
 
@@ -186,9 +207,9 @@ class Game
   def start
     loop do
       game_start_setup
+      @timer.time_start
       game_sequence
       game_reset
     end
   end
 end
-
