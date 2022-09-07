@@ -4,6 +4,7 @@ class Game
               :board,
               :column_choices,
               :turn_count
+              :timer
 
   def initialize
     @board = Board.new
@@ -13,6 +14,7 @@ class Game
     @player_2_turn = ""
     @player_1_selection = ""
     @turn_count = 1
+    @timer = Timer.new(@board)
   end
 
   def user_input
