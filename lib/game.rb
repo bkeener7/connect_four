@@ -110,8 +110,27 @@ class Game
     end
   end
 
+  def player_2_selection_loop
+    loop do
+      print "\nTurn #{@turn_count} - #{@board.player_2}, please Select a column:\n"
+      @player_2_selection = user_input
+      if @column_choices.include?(@player_2_selection.upcase) == true && @player_2_turn.column_select(@player_2_selection.upcase) != :invalid_move
+        break
+      else 
+        print "\nInvalid move."
+      end
+    end
+  end
+
   def player_1_turn_sequence
     player_1_selection_loop
+    @turn_count += 1
+    @board.update_layout
+    @board.print_layout
+  end
+
+  def player_2_turn_sequence
+    player_2_selection_loop
     @turn_count += 1
     @board.update_layout
     @board.print_layout
@@ -141,7 +160,7 @@ class Game
   def game_logic
       player_1_turn_sequence
       return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
-      bot_turn_sequence
+      bot_turn_sequence if is_bot? == true || player_2_turn_sequence
       return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
       return (print "Draw. No winner!") if @player_2_turn.connect_four == :stalemate
   end
