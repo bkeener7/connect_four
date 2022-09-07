@@ -202,6 +202,7 @@ class Game
   def game_reset
     @turn_count = 1
     @board = Board.new
+    @is_bot = false
   end
 
   def start
