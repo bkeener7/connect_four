@@ -16,16 +16,16 @@ arr.chunk_while{ |a, b| a == b && a != "" }.any?{ |player_piece| player_piece.si
 return arr.max_by{ |player| arr.count(player) } 
 ```
 
-This checks to see if there are any adjacent non-blank spaces that have pieces whose player name’s match each other. If they match in a number greater than four, it returns a win for that player. This same core code is used to define all four win condition methods. 
+This checks to see if there are any adjacent non-blank spaces that have pieces whose player name’s match each other. If they match in a number greater than or equal to four, it returns a win for that player. This same core code is used to define all four win condition methods. 
 
 Along with the stalemate method, all four win condition methods are tied into the `connect_four` method, allowing one method to run all conditions that determine a win.
 
 In the tests, you will notice that test 5 of the game_spec.rb file occasionally fails. *This is intentional* to ensure that the bot is truly making random choices.
 
-Additionally, there are two, 2-second pauses in the tests. These are from the timer_spec.rb file to test the functionality of the timer. The pauses during testing is intentional.
+Additionally, there are two, 2-second pauses in the tests. These are from the timer_spec.rb file to test the functionality of the timer. The pauses during testing are intentional.
  
 For iteration 4, we completed Two Human Players (THP) and Time Keeping (TK). THP will give the user a prompt to select a computer or bot to play against. TK records time to win, total wins and fastest win for the current session. The TK class is accessible through the terminal via user prompts and successful responses to see their statistics. 
 
 Our TK class does not keep track through sessions after the repeat game loop is terminated. This was due to a misunderstanding in what was being asked in iteration 4 requirements. While Win/Loss Record Keeping specifically states that records should persists between plays, this requirement was absent from TK. We reached out to the instructors to clarify this, but did not have ample time to change from what we had developed by that point. Therefore the TK class only tracks through the current session of games.
 
-In unmerged branch `feat/export_statistics` we modified TK to have a writing function that would track these statistics through play sessions by ways of a .json file. This branch is mostly completed, but we did not have time to test thoroughly before sumbmitting, therefore did not merge it.
+In unmerged branch `feat/export_statistics` we modified TK to have a writing function that would track these statistics through play sessions by ways of a .json file. This branch is mostly complete, but we did not have time to thoroughly finish and test before sumbmitting, therefore did not merge it.
