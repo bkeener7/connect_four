@@ -11,7 +11,7 @@ RSpec.describe Timer do
     it '1. exists' do
         timer = Timer.new
         expect(timer).to be_an_instance_of(Timer)
-        
+
     end
 
     it '2. counts time' do
@@ -32,14 +32,27 @@ RSpec.describe Timer do
 
     end
 
-    xit '4. records time' do
-        timer = Timer.new
+    it '4. can detect current players fastest win' do
+        timer = Timer.new       
+                
+        timer.player1_stats[:player_name] = "Bryan"
+        timer.player1_stats[:wins] = 4, 
+        timer.player1_stats[:win_times_seconds].push(6, 189, 34, 75)
+        expect(timer.fastest_win("Bryan")).to eq(6)
         
-
-
-
     end
 
+    it '5. will record a win and time taken' do
+        timer = Timer.new
 
+        timer.time_start
+        sleep(2)
+        timer.player1_stats[:player_name] = "Bryan"
+        expect(timer.player1_stats[:wins]).to eq(0)
 
+        timer.record_win("Bryan")
+        expect(timer.player1_stats[:wins]).to eq(1)
+        expect(timer.player1_stats[:win_times_seconds]).to eq([2])
+
+    end
 end

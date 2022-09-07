@@ -3,8 +3,7 @@ require './lib/row'
 require './lib/column'
 require './lib/board'
 require './lib/turn'
-require './lib/Game'
-require 'pry'
+require './lib/game'
 
 RSpec.describe Game do
 
