@@ -5,6 +5,7 @@ require './lib/board'
 require './lib/turn'
 require './lib/game'
 
+
 RSpec.describe Game do
 
   it "1. exists" do
@@ -83,5 +84,4 @@ RSpec.describe Game do
   # end
 
 end
-
 
