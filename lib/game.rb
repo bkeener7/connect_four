@@ -21,12 +21,31 @@ class Game
     input
   end
 
-    # def choose_opponent_prompt
-  #   "\nType 'Computer' to play against computer or 'Player' to play against another player\n"
-  # end
-  #^there due to limitation on testing methods with user input.
+  def choose_opponent_prompt
+    "\nType 'Computer' to play against computer or 'Player' to play against another player\n"
+  end
 
-  def set_player1
+  def choose_opponent
+    opponent_choice = user_input
+    if opponent_choice.upcase == "COMPUTER"
+      set_bot
+    elsif opponent_choice.upcase == "PLAYER"
+      set_player_2
+    else 
+      print "\nInvalid selection.\n"
+    end
+  end
+
+  def set_players
+    set_player_1
+    loop do
+      print choose_opponent_prompt
+      choose_opponent
+      break if @board.player_2 != ""
+    end
+  end
+
+  def set_player_1
     loop do
       print "\nPlayer 1, please enter your name.\n"
       @board.player_1 = user_input
@@ -34,7 +53,7 @@ class Game
     end
   end
 
-  def set_player2
+  def set_player_2
     loop do
       print "\nPlayer 2, please enter your name.\n"
       @board.player_2 = user_input
@@ -58,9 +77,8 @@ class Game
   def main_menu_user_input
     choice = user_input
     if choice.upcase == "P"
-      set_player1
-      set_bot
-      "P"
+      set_players
+      :continue
     elsif choice.upcase == "QUIT"
       abort ":("
     else
@@ -71,7 +89,7 @@ class Game
   def main_menu
     print welcome_message
     loop do
-      break if main_menu_user_input == "P"
+      break if main_menu_user_input == :continue
     end
   end
 
