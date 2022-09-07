@@ -39,12 +39,6 @@ class Game
     @board.player_2 = "Computer"
   end
 
-  def bot_selection
-    @turn_count += 1
-    @column_choices = @column_choices.shuffle
-    @column_choices[0]
-  end
-
   def welcome_message
     "\nWelcome to CONNECT FOUR\nEnter 'P' to play. Enter 'QUIT' to exit at anytime.\n"
   end
@@ -78,32 +72,44 @@ class Game
     loop do
       print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:\n"
       @player_1_selection = user_input
-      break if @column_choices.include?(@player_1_selection.upcase) == true
+      (break if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move) || (print "\nInvalid move.")
     end
   end
 
   def player_1_turn_sequence
     player_1_selection_loop
-    @player_1_turn.column_select(@player_1_selection.upcase)
     @turn_count += 1
     @board.update_layout
     @board.print_layout
   end
 
+  def bot_selection
+    @column_choices = @column_choices.shuffle
+    @column_choices[0]
+  end
+
+  def bot_selection_loop
+    loop do
+      bot_selection
+      computer_selection = bot_selection
+      break if @player_2_turn.column_select(computer_selection) != :invalid_move
+    end
+  end
+
   def bot_turn_sequence
       print "\nTurn #{@turn_count} - Computer turn:"
-      computer_selection = bot_selection
-      @player_2_turn.column_select(computer_selection)
+      bot_selection_loop
+      @turn_count += 1
       board.update_layout
       @board.print_layout
   end
   
   def game_logic
       player_1_turn_sequence
-      
       return (print "\n#{@board.player_1} wins!\n") if @player_1_turn.connect_four == @board.player_1
       bot_turn_sequence
       return (print "\n#{@board.player_2} wins!\n") if @player_2_turn.connect_four == @board.player_2
+      return (print "Draw. No winner!") if @player_2_turn.connect_four == :stalemate
   end
 
   def game_start_setup
@@ -115,7 +121,7 @@ class Game
   def game_sequence
     loop do
       game_logic
-      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 ||@player_2_turn.connect_four == :stalemate
     end
   end
 
@@ -141,11 +147,3 @@ class Game
 
 end
 
-
-#Need to make bot play again if selected full column - incomplete
-#Need to add draw condition and print
-
-
-  #Syntax reminder for Mostafa: a = ("a" if foo) || ("b" if bar) || "c"
-
-  # if foo 'a' elsif bar 'b' else 'c' syntax to help me refactor later -Mostafa
