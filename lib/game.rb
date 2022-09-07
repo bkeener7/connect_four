@@ -2,7 +2,8 @@ class Game
   attr_reader :player_1,
               :player_2,
               :board,
-              :column_choices
+              :column_choices,
+              :turn_count
 
   def initialize
     @board = Board.new
@@ -20,6 +21,11 @@ class Game
     input
   end
 
+    # def choose_opponent_prompt
+  #   "\nType 'Computer' to play against computer or 'Player' to play against another player\n"
+  # end
+  #^there due to limitation on testing methods with user input.
+
   def set_player1
     loop do
       print "\nPlayer 1, please enter your name.\n"
@@ -28,7 +34,13 @@ class Game
     end
   end
 
-  #Reuse above for setting player2 
+  def set_player2
+    loop do
+      print "\nPlayer 2, please enter your name.\n"
+      @board.player_2 = user_input
+      @board.player_2 != "" ? break : (print "\nSorry. Please try again.")
+    end
+  end
 
   def is_bot?
     @is_bot
@@ -72,7 +84,11 @@ class Game
     loop do
       print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:\n"
       @player_1_selection = user_input
-      (break if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move) || (print "\nInvalid move.")
+      if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move
+        break
+      else 
+        print "\nInvalid move."
+      end
     end
   end
 
@@ -121,14 +137,13 @@ class Game
   def game_sequence
     loop do
       game_logic
-      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 ||@player_2_turn.connect_four == :stalemate
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
     end
   end
 
   def game_reset
     @turn_count = 1
     @board = Board.new
-
   end
 
   def start
@@ -138,12 +153,5 @@ class Game
       game_reset
     end
   end
-
-
-  # def choose_opponent_prompt
-  #   "\nType 'Computer' to play against computer or 'Player' to play against another player\n"
-  # end
-  #^there due to limitation on testing methods with user input.
-
 end
 
