@@ -1,5 +1,8 @@
 class Timer
-    attr_reader :t1, :t2, :player1_stats, :player2_stats
+    attr_reader :t1,
+                :t2,
+                :player1_stats,
+                :player2_stats
 
     def initialize
         @player1_stats = {:player_name => "", :wins => 0, win_times_seconds: []}

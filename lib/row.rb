@@ -1,5 +1,6 @@
 class Row
-    attr_reader :player, :playable
+    attr_reader :player,
+                :playable
 
     def initialize
         @player = ""

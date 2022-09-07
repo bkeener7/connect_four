@@ -7,10 +7,8 @@ require './lib/turn'
 RSpec.describe Turn do
 
   it '1. exists' do
-
     board = Board.new
     turn = Turn.new('Bryan', board)
-
   end
 
   it '2. has a player select a column and coverts it to array value' do   
@@ -21,7 +19,6 @@ RSpec.describe Turn do
     expect(turn.user_selection).to eq([0, 'Bryan'])
     turn.column_select('E')
     expect(turn.user_selection).to eq([4, 'Bryan'])
-
   end
 
   it '3. it can fill a piece on the board from user input' do
@@ -36,7 +33,6 @@ RSpec.describe Turn do
     expect(board.columns[0].rows[5].playable).to eq(false)
     expect(board.columns[0].rows[5].player).to eq('Bryan')
     expect(board.columns[0].rows[4].playable).to eq(true)
-
   end
 
   it '4. it accurately toggles which rows are playable' do
@@ -59,7 +55,6 @@ RSpec.describe Turn do
     expect(board.columns[0].rows[3].player).to eq('Bryan')
     expect(board.columns[0].rows[2].playable).to eq(true)
     expect(board.columns[0].rows[2].player).to eq('')
-
   end
 
   it '5. does not allow an invalid player move' do        
@@ -75,7 +70,6 @@ RSpec.describe Turn do
       
     #invalid player move here
     expect(turn.column_select('A')).to eq(:invalid_move)
-
   end 
 
   it '6. checks first column for vertical win' do
@@ -88,7 +82,6 @@ RSpec.describe Turn do
 
     expect(turn.column_win).to eq('Bryan')
     expect(turn.connect_four).to eq('Bryan')
-
   end
 
   it '7. checks other columns for vertical wins' do
@@ -107,7 +100,6 @@ RSpec.describe Turn do
     expect(turn1.column_win).to eq('Mostafa')
     expect(turn2.column_win).to eq('Mostafa')
     expect(turn1.connect_four).to eq('Mostafa')
-
   end
 
   it '8. does not give false positives for vertical wins' do
@@ -125,7 +117,6 @@ RSpec.describe Turn do
     expect(turn1.column_win).to eq(:no_win)
     expect(turn2.column_win).to eq(:no_win)
     expect(turn1.connect_four).to eq(:no_win)
-
   end
 
   it '9. checks first row for horizontal win' do
@@ -141,7 +132,6 @@ RSpec.describe Turn do
     expect(turn1.row_win).to eq('Mostafa')
     expect(turn2.row_win).to eq('Mostafa')
     expect(turn1.connect_four).to eq('Mostafa')
-
   end
 
   it '10. checks other rows for horizontal win' do
@@ -170,7 +160,6 @@ RSpec.describe Turn do
     expect(turn1.row_win).to eq('Bryan')
     expect(turn2.row_win).to eq('Bryan')
     expect(turn1.connect_four).to eq('Bryan')
-
   end
 
   it '11. does not return false positives for horizontal wins' do
@@ -199,7 +188,6 @@ RSpec.describe Turn do
     expect(turn1.row_win).to eq(:no_win)
     expect(turn2.row_win).to eq(:no_win)
     expect(turn1.connect_four).to eq(:no_win)
-
   end
 
   it '12. checks right and up diagonal wins' do
@@ -223,7 +211,6 @@ RSpec.describe Turn do
     expect(turn1.diagonal_rightup).to eq('Bryan')
     expect(turn1.diagonal_leftup).to eq(:no_win)
     expect(turn1.connect_four).to eq('Bryan')
-
   end
 
   it '13. checks left and up diagonal wins' do
@@ -245,7 +232,6 @@ RSpec.describe Turn do
     expect(turn1.diagonal_rightup).to eq(:no_win)
     expect(turn1.diagonal_leftup).to eq('Mostafa')
     expect(turn1.connect_four).to eq('Mostafa')
-
   end
 
   it '14. does not confuse empty spaces for players' do
@@ -257,8 +243,7 @@ RSpec.describe Turn do
     expect(turn1.row_win).to eq(:no_win)
     expect(turn1.diagonal_rightup).to eq(:no_win)
     expect(turn1.diagonal_leftup).to eq(:no_win)
-    expect(turn1.connect_four).to eq(:no_win)    
-
+    expect(turn1.connect_four).to eq(:no_win) 
   end
 
   it '15. returns :stalemate if there are no more available plays' do
@@ -295,7 +280,6 @@ RSpec.describe Turn do
     expect(turn1.diagonal_leftup).to eq(:no_win)
     expect(turn1.stalemate_check).to eq(:stalemate)
     expect(turn1.connect_four).to eq(:stalemate)   
-
   end
 
   it '16. checks for wins over four pieces long' do
@@ -310,7 +294,5 @@ RSpec.describe Turn do
 
     expect(turn.column_win).to eq('Mostafa')
     expect(turn.connect_four).to eq('Mostafa')
-
   end
-    
 end

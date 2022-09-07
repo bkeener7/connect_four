@@ -1,5 +1,6 @@
 class Column
-  attr_reader :rows, :count
+  attr_reader :rows, 
+              :count
 
   def initialize
     @rows = []

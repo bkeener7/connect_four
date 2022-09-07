@@ -71,5 +71,4 @@ RSpec.describe Column do
     column.play_piece("Mostafa")
     expect(column.rows[4].player).to eq('Mostafa')
   end
-
 end

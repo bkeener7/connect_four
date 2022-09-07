@@ -2,6 +2,7 @@ require 'rspec'
 require './lib/row'
 
 RSpec.describe Row do
+  
   it "exists" do
     row = Row.new
     expect(row).to be_an_instance_of(Row)

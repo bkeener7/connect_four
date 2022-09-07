@@ -63,6 +63,3 @@ end
 #column[0].row[0] is layout[16]
 #column[6].row[0] is layout[28]
 #column[0].row[1] is layout[30]
-
-
-

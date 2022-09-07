@@ -24,7 +24,6 @@ RSpec.describe Game do
     expect(game.is_bot?).to eq(false)
   end
 
-
   it "4. bot only has columns A through G as options to select" do
     game = Game.new
 
@@ -76,12 +75,6 @@ RSpec.describe Game do
     expect(game.turn_count).to eq(1)
     expect(game.board.layout).to eq("\n\nA B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\n")
   end
-
-  # it ". gives a prompt to choose opponent" do
-  #   game = Game.new
-  #   expect(game.choose_opponent_prompt).to eq("\nType 'Computer' to play against computer or 'Player' to play against another player\n")
-  # end
-
 end
 
 

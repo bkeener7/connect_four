@@ -1,5 +1,8 @@
 class Turn
-  attr_reader :user_selection, :board, :player, :column_conversion
+  attr_reader :user_selection,
+              :board,
+              :player,
+              :column_conversion
 
   def initialize(player, board)
     @column_conversion = {'A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6}
@@ -100,7 +103,6 @@ class Turn
     end
     :no_win
   end
-
   
   def stalemate_check
     #check top array at end of connect_four if :no_win and if all full then :stalemate
