@@ -1,4 +1,6 @@
-{"player_name":"Bryan","wins":1,"win_times_seconds":[2]}
-{"player_name":"Mostafa","wins":3,"win_times_seconds":[2]}
-{"player_name":"Amber","wins":1,"win_times_seconds":[2]}
-{"player_name":"Heba","wins":1,"win_times_seconds":[2]}
+{"player_name":"Mostafa","wins":1,"win_times_seconds":[3]}
+{"player_name":"Mostafa","wins":2,"win_times_seconds":[3,2]}
+{"player_name":"Mostafa","wins":3,"win_times_seconds":[3,2,6]}
+{"player_name":"Bryan","wins":1,"win_times_seconds":[12]}
+{"player_name":"Bryan","wins":2,"win_times_seconds":[12, 32]}
+{"player_name":"Bryan","wins":3,"win_times_seconds":[12,32,29]}

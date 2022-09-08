@@ -188,7 +188,6 @@ class Game
       game_logic
       break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
     end
-    @timer.record_win(@board.player_1) if @player_1_turn.connect_four == @board.player_1 || @timer.record_win(@board.player_2) if @player_2_turn.connect_four == @board.player_2
     @timer.save_record
   end
 
