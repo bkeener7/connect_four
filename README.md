@@ -31,6 +31,6 @@ Our TK class does not keep track through sessions after the repeat game loop is 
 In unmerged branch `feat/export_statistics` we modified TK to have a writing function that would track these statistics through play sessions by ways of a .json file. This branch is mostly complete, but we did not have time to thoroughly finish and test before sumbmitting, therefore did not merge it.
 
 
-Edit 1 by Mostafa: at 7 pm, I managed to fulfill iteration 4 requirements of time keeping (was really curious about how to make it work, so I kept at it) but it seems the use of JSON broke the game and timer tests. 
+Edit 1: at 7 pm, iteration 4 requirements of time keeping were finally fulfilled (was really curious about how to make it work, so I kept at it) but it seems the use of JSON broke the game and timer tests. 
 
-Edit 2, also by Mostafa: I would very much like feedback on whether testing if we're reading and writing to external files generally is considered IO testing or not, whether there's something different about a json file reading and writing or not, and if both or either of those two are a no just a pointer in the right direction for how to test would be nice.
+Edit 2: I would very much like feedback on whether testing if we're reading and writing to external files generally is considered IO testing or not, whether there's something different about a json file reading and writing or not, and if both or either of those two are a no just a pointer in the right direction for how to test would be nice.
