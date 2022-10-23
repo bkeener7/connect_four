@@ -5,13 +5,12 @@ require './lib/board'
 require './lib/turn'
 
 RSpec.describe Turn do
-
   it '1. exists' do
     board = Board.new
     turn = Turn.new('Bryan', board)
   end
 
-  it '2. has a player select a column and coverts it to array value' do   
+  it '2. has a player select a column and coverts it to array value' do
     board = Board.new
     turn = Turn.new('Bryan', board)
 
@@ -25,7 +24,6 @@ RSpec.describe Turn do
     board = Board.new
     turn = Turn.new('Bryan', board)
 
-    
     expect(board.columns[0].rows[5].playable).to eq(true)
     expect(board.columns[0].rows[5].player).to eq('')
     turn.column_select('A')
@@ -41,14 +39,13 @@ RSpec.describe Turn do
 
     expect(board.columns[0].rows[5].playable).to eq(true)
     expect(board.columns[0].rows[5].player).to eq('')
-    
 
     3.times do
       turn.column_select('A')
     end
 
     expect(board.columns[0].rows[5].playable).to eq(false)
-    expect(board.columns[0].rows[5].player).to eq('Bryan')    
+    expect(board.columns[0].rows[5].player).to eq('Bryan')
     expect(board.columns[0].rows[4].playable).to eq(false)
     expect(board.columns[0].rows[4].player).to eq('Bryan')
     expect(board.columns[0].rows[3].playable).to eq(false)
@@ -57,20 +54,20 @@ RSpec.describe Turn do
     expect(board.columns[0].rows[2].player).to eq('')
   end
 
-  it '5. does not allow an invalid player move' do        
+  it '5. does not allow an invalid player move' do
     board = Board.new
     turn = Turn.new('Bryan', board)
-    
+
     6.times do
       turn.column_select('A')
     end
 
     expect(board.columns[0].rows[0].playable).to eq(false)
     expect(board.columns[0].rows[0].player).to eq('Bryan')
-      
-    #invalid player move here
+
+    # invalid player move here
     expect(turn.column_select('A')).to eq(:invalid_move)
-  end 
+  end
 
   it '6. checks first column for vertical win' do
     board = Board.new
@@ -88,15 +85,15 @@ RSpec.describe Turn do
     board = Board.new
     turn1 = Turn.new('Bryan', board)
     turn2 = Turn.new('Mostafa', board)
-    
+
     2.times do
-      turn1.column_select('D') 
+      turn1.column_select('D')
     end
-    
+
     4.times do
       turn2.column_select('D')
     end
-    
+
     expect(turn1.column_win).to eq('Mostafa')
     expect(turn2.column_win).to eq('Mostafa')
     expect(turn1.connect_four).to eq('Mostafa')
@@ -107,13 +104,13 @@ RSpec.describe Turn do
     turn1 = Turn.new('Bryan', board)
     turn2 = Turn.new('Mostafa', board)
 
-    turn1.column_select('D')    
-    turn2.column_select('D')    
-    turn1.column_select('D')    
-    turn2.column_select('D')  
-    turn2.column_select('D')   
-    turn2.column_select('D')  
-    
+    turn1.column_select('D')
+    turn2.column_select('D')
+    turn1.column_select('D')
+    turn2.column_select('D')
+    turn2.column_select('D')
+    turn2.column_select('D')
+
     expect(turn1.column_win).to eq(:no_win)
     expect(turn2.column_win).to eq(:no_win)
     expect(turn1.connect_four).to eq(:no_win)
@@ -128,7 +125,7 @@ RSpec.describe Turn do
     turn2.column_select('C')
     turn2.column_select('E')
     turn2.column_select('F')
-  
+
     expect(turn1.row_win).to eq('Mostafa')
     expect(turn2.row_win).to eq('Mostafa')
     expect(turn1.connect_four).to eq('Mostafa')
@@ -139,19 +136,19 @@ RSpec.describe Turn do
     turn1 = Turn.new('Bryan', board)
     turn2 = Turn.new('Mostafa', board)
 
-    #row 1
+    # row 1
     turn2.column_select('D')
     turn1.column_select('C')
     turn2.column_select('E')
     turn2.column_select('F')
 
-    #row 2
+    # row 2
     turn2.column_select('D')
     turn1.column_select('C')
     turn2.column_select('E')
     turn2.column_select('F')
 
-    #row 3 - winning row
+    # row 3 - winning row
     turn1.column_select('D')
     turn1.column_select('C')
     turn1.column_select('E')
@@ -167,19 +164,19 @@ RSpec.describe Turn do
     turn1 = Turn.new('Bryan', board)
     turn2 = Turn.new('Mostafa', board)
 
-    #row 1
+    # row 1
     turn2.column_select('D')
     turn1.column_select('C')
     turn2.column_select('E')
     turn2.column_select('F')
 
-    #row 2
+    # row 2
     turn2.column_select('D')
     turn1.column_select('C')
     turn2.column_select('E')
     turn2.column_select('F')
 
-    #row 3 - winning row
+    # row 3 - winning row
     turn1.column_select('D')
     turn2.column_select('C')
     turn1.column_select('E')
@@ -205,8 +202,8 @@ RSpec.describe Turn do
     turn2.column_select('F')
     turn2.column_select('F')
     turn1.column_select('F')
-    
-    #win condition is in arr4, or right_up[4]    
+
+    # win condition is in arr4, or right_up[4]
 
     expect(turn1.diagonal_rightup).to eq('Bryan')
     expect(turn1.diagonal_leftup).to eq(:no_win)
@@ -243,7 +240,7 @@ RSpec.describe Turn do
     expect(turn1.row_win).to eq(:no_win)
     expect(turn1.diagonal_rightup).to eq(:no_win)
     expect(turn1.diagonal_leftup).to eq(:no_win)
-    expect(turn1.connect_four).to eq(:no_win) 
+    expect(turn1.connect_four).to eq(:no_win)
   end
 
   it '15. returns :stalemate if there are no more available plays' do
@@ -279,12 +276,12 @@ RSpec.describe Turn do
     expect(turn1.diagonal_rightup).to eq(:no_win)
     expect(turn1.diagonal_leftup).to eq(:no_win)
     expect(turn1.stalemate_check).to eq(:stalemate)
-    expect(turn1.connect_four).to eq(:stalemate)   
+    expect(turn1.connect_four).to eq(:stalemate)
   end
 
   it '16. checks for wins over four pieces long' do
-    #this test was created to add an additional check due to an unforeseen 
-    #false negatives encountered during later testing 
+    # this test was created to add an additional check due to an unforeseen
+    # false negatives encountered during later testing
     board = Board.new
     turn = Turn.new('Mostafa', board)
 
