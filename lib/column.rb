@@ -1,10 +1,10 @@
 class Column
-  attr_reader :rows, 
+  attr_reader :rows,
               :count
 
   def initialize
     @rows = []
-    @count = 5 
+    @count = 5
     generate_rows
   end
 
@@ -16,13 +16,14 @@ class Column
   end
 
   def play_piece(player)
-    if count > 0 && rows[count].playable == true
-      rows[count].toggle_player(player)         
+    if count.positive? && rows[count].playable == true
+      rows[count].toggle_player(player)
       rows[count - 1].toggle_playable
       @count -= 1
-    elsif count == 0 && rows[count].playable == true
+    elsif count.zero? && rows[count].playable == true
       rows[count].toggle_player(player)
-    else :invalid_move 
+    else
+      :invalid_move
     end
   end
 end

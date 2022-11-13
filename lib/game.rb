@@ -1,25 +1,25 @@
-class Game 
+class Game
   attr_reader :player_1,
               :player_2,
               :board,
               :column_choices,
-              :turn_count
+              :turn_count,
               :timer
 
   def initialize
     @board = Board.new
     @is_bot = false
-    @column_choices = ["A", "B", "C", "D", "E", "F", "G"]
-    @player_1_turn = ""
-    @player_2_turn = ""
-    @player_1_selection = ""
+    @column_choices = %w[A B C D E F G]
+    @player_1_turn = ''
+    @player_2_turn = ''
+    @player_1_selection = ''
     @turn_count = 1
     @timer = Timer.new
   end
 
   def user_input
     input = gets.chomp
-    abort if input.upcase == "QUIT"
+    abort if input.upcase == 'QUIT'
     input
   end
 
@@ -28,21 +28,23 @@ class Game
   end
 
   def gets_stats(stat_request)
-   if stat_request.upcase == @timer.player1_stats[:player_name].upcase
+    if stat_request.upcase == @timer.player1_stats[:player_name].upcase
       @timer.print_player1_stats
     elsif stat_request.upcase == @timer.player2_stats[:player_name].upcase
       @timer.print_player2_stats
-    else print "\nWin a game to start gathering stats!"
+    else
+      print "\nWin a game to start gathering stats!"
     end
   end
 
   def choose_opponent
     opponent_choice = user_input
-    if opponent_choice.upcase == "C"
+    case opponent_choice.upcase
+    when 'C'
       set_bot
-    elsif opponent_choice.upcase == "P"
+    when 'P'
       set_player_2
-    else 
+    else
       print "\nInvalid selection.\n"
     end
   end
@@ -52,7 +54,7 @@ class Game
     loop do
       print choose_opponent_prompt
       choose_opponent
-      break if @board.player_2 != ""
+      break if @board.player_2 != ''
     end
   end
 
@@ -61,8 +63,8 @@ class Game
       print "\nPlayer 1, please enter your name.\n"
       @board.player_1 = user_input
       print "\nHi #{@board.player_1}! Press 'S' to see stats or press any other key to continue.\n"
-      puts gets_stats(@board.player_1) if user_input.upcase == "S"
-      @board.player_1 != "" ? break : (print "\nSorry. Please try again.")
+      puts gets_stats(@board.player_1) if user_input.upcase == 'S'
+      @board.player_1 != '' ? break : (print "\nSorry. Please try again.")
     end
   end
 
@@ -71,8 +73,8 @@ class Game
       print "\nPlayer 2, please enter your name.\n"
       @board.player_2 = user_input
       print "\nHi #{@board.player_2}! Press 'S' to see stats or press any other key to continue.\n"
-      puts gets_stats(@board.player_2) if user_input.upcase == "S"
-      @board.player_2 != "" ? break : (print "\nSorry. Please try again.")
+      puts gets_stats(@board.player_2) if user_input.upcase == 'S'
+      @board.player_2 != '' ? break : (print "\nSorry. Please try again.")
     end
   end
 
@@ -82,7 +84,7 @@ class Game
 
   def set_bot
     @is_bot = true
-    @board.player_2 = "Computer"
+    @board.player_2 = 'Computer'
   end
 
   def welcome_message
@@ -91,11 +93,12 @@ class Game
 
   def main_menu_user_input
     choice = user_input
-    if choice.upcase == "P"
+    case choice.upcase
+    when 'P'
       set_players
       :continue
-    elsif choice.upcase == "QUIT"
-      abort ":("
+    when 'QUIT'
+      abort ':('
     else
       print "\nSorry, please try again.\n"
     end
@@ -109,7 +112,7 @@ class Game
   end
 
   def set_player_turns
-    @player_1_turn = Turn.new(@board.player_1, @board) 
+    @player_1_turn = Turn.new(@board.player_1, @board)
     @player_2_turn = Turn.new(@board.player_2, @board)
   end
 
@@ -119,7 +122,7 @@ class Game
       @player_1_selection = user_input
       if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move
         break
-      else 
+      else
         print "\nInvalid move."
       end
     end
@@ -131,7 +134,7 @@ class Game
       @player_2_selection = user_input
       if @column_choices.include?(@player_2_selection.upcase) == true && @player_2_turn.column_select(@player_2_selection.upcase) != :invalid_move
         break
-      else 
+      else
         print "\nInvalid move."
       end
     end
@@ -165,25 +168,25 @@ class Game
   end
 
   def bot_turn_sequence
-      print "\nTurn #{@turn_count} - Computer turn:"
-      bot_selection_loop
-      @turn_count += 1
-      board.update_layout
-      @board.print_layout
+    print "\nTurn #{@turn_count} - Computer turn:"
+    bot_selection_loop
+    @turn_count += 1
+    board.update_layout
+    @board.print_layout
   end
-  
+
   def game_logic
-      player_1_turn_sequence
-      if @player_1_turn.connect_four == @board.player_1
-        @timer.record_win(@board.player_1)
-        return (print "\n#{@board.player_1} wins!\n") 
-      end
-      bot_turn_sequence if is_bot? == true || player_2_turn_sequence
-      if @player_2_turn.connect_four == @board.player_2
-        @timer.record_win(@board.player_2)
-        return (print "\n#{@board.player_2} wins!\n") 
-      end
-      return (print "Draw. No winner!") if @player_2_turn.connect_four == :stalemate
+    player_1_turn_sequence
+    if @player_1_turn.connect_four == @board.player_1
+      @timer.record_win(@board.player_1)
+      return (print "\n#{@board.player_1} wins!\n")
+    end
+    bot_turn_sequence if is_bot? == true || player_2_turn_sequence
+    if @player_2_turn.connect_four == @board.player_2
+      @timer.record_win(@board.player_2)
+      return (print "\n#{@board.player_2} wins!\n")
+    end
+    return (print 'Draw. No winner!') if @player_2_turn.connect_four == :stalemate
   end
 
   def game_start_setup
@@ -195,7 +198,9 @@ class Game
   def game_sequence
     loop do
       game_logic
-      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
+      if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
+        break
+      end
     end
   end
 
