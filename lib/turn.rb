@@ -27,9 +27,7 @@ class Turn
         x -= 1
       end
 
-      if player_column.chunk_while { |a, b| a == b && a != '' }.any? { |player| player.size >= 4 }
-        return player_column.max_by { |player| player_column.count(player) }
-      end
+      return player_column.max_by { |player| player_column.count(player) } if player_column.chunk_while { |a, b| a == b && a != '' }.any? { |player| player.size >= 4 }
 
       y += 1
     end
@@ -47,9 +45,7 @@ class Turn
         y += 1
       end
 
-      if player_row.chunk_while { |a, b| a == b && a != '' }.any? { |player| player.size >= 4 }
-        return player_row.max_by { |player| player_row.count(player) }
-      end
+      return player_row.max_by { |player| player_row.count(player) } if player_row.chunk_while { |a, b| a == b && a != '' }.any? { |player| player.size >= 4 }
 
       x -= 1
     end
@@ -78,9 +74,7 @@ class Turn
 
     if check_right.any? { |occupied| occupied.size.positive? }
       right_up.each do |arr|
-        if arr.chunk_while { |a, b| a == b && a != '' }.any? { |player_piece| player_piece.size >= 4 }
-          return arr.max_by { |player| arr.count(player) }
-        end
+        return arr.max_by { |player| arr.count(player) } if arr.chunk_while { |a, b| a == b && a != '' }.any? { |player_piece| player_piece.size >= 4 }
       end
     end
     :no_win
@@ -108,9 +102,7 @@ class Turn
 
     if check_left.any? { |occupied| occupied.size.positive? }
       left_up.each do |arr|
-        if arr.chunk_while { |a, b| a == b && a != '' }.any? { |player_piece| player_piece.size >= 4 }
-          return arr.max_by { |player| arr.count(player) }
-        end
+        return arr.max_by { |player| arr.count(player) } if arr.chunk_while { |a, b| a == b && a != '' }.any? { |player_piece| player_piece.size >= 4 }
       end
     end
     :no_win

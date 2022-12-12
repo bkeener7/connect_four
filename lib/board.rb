@@ -37,13 +37,13 @@ class Board
   end
 
   def board_logic
-    if @columns[@column_index].rows[@row_index].player == @player_1 && @columns[@column_index].rows[@row_index].player != ''
-      @layout[@layout_index] = 'x'
-    elsif @columns[@column_index].rows[@row_index].player == @player_2 && @columns[@column_index].rows[@row_index].player != ''
-      @layout[@layout_index] = 'o'
-    else
-      @layout[@layout_index] = '.'
-    end
+    @layout[@layout_index] = if @columns[@column_index].rows[@row_index].player == @player_1 && @columns[@column_index].rows[@row_index].player != ''
+                               'x'
+                             elsif @columns[@column_index].rows[@row_index].player == @player_2 && @columns[@column_index].rows[@row_index].player != ''
+                               'o'
+                             else
+                               '.'
+                             end
   end
 
   def board_logic_loop

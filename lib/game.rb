@@ -120,11 +120,9 @@ class Game
     loop do
       print "\nTurn #{@turn_count} - #{@board.player_1}, please Select a column:\n"
       @player_1_selection = user_input
-      if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move
-        break
-      else
-        print "\nInvalid move."
-      end
+      break if @column_choices.include?(@player_1_selection.upcase) == true && @player_1_turn.column_select(@player_1_selection.upcase) != :invalid_move
+
+      print "\nInvalid move."
     end
   end
 
@@ -132,11 +130,9 @@ class Game
     loop do
       print "\nTurn #{@turn_count} - #{@board.player_2}, please Select a column:\n"
       @player_2_selection = user_input
-      if @column_choices.include?(@player_2_selection.upcase) == true && @player_2_turn.column_select(@player_2_selection.upcase) != :invalid_move
-        break
-      else
-        print "\nInvalid move."
-      end
+      break if @column_choices.include?(@player_2_selection.upcase) == true && @player_2_turn.column_select(@player_2_selection.upcase) != :invalid_move
+
+      print "\nInvalid move."
     end
   end
 
@@ -198,9 +194,7 @@ class Game
   def game_sequence
     loop do
       game_logic
-      if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
-        break
-      end
+      break if @player_1_turn.connect_four == @board.player_1 || @player_2_turn.connect_four == @board.player_2 || @player_2_turn.connect_four == :stalemate
     end
   end
 
