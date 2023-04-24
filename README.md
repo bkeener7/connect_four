@@ -29,8 +29,3 @@ For iteration 4, we completed Two Human Players (THP) and Time Keeping (TK). THP
 Our TK class does not keep track through sessions after the repeat game loop is terminated. This was due to a misunderstanding in what was being asked in iteration 4 requirements. While Win/Loss Record Keeping specifically states that records should persists between plays, this requirement was absent from TK. We reached out to the instructors to clarify this, but did not have ample time to change from what we had developed by that point. Therefore the TK class only tracks through the current session of games.
 
 In unmerged branch `feat/export_statistics` we modified TK to have a writing function that would track these statistics through play sessions by ways of a .json file. This branch is mostly complete, but we did not have time to thoroughly finish and test before sumbmitting, therefore did not merge it.
-
-
-Edit 1: at 7 pm, iteration 4 requirements of time keeping were finally fulfilled (was really curious about how to make it work, so I kept at it) but it seems the use of JSON broke the game and timer tests. 
-
-Edit 2: I would very much like feedback on whether testing if we're reading and writing to external files generally is considered IO testing or not, whether there's something different about a json file reading and writing or not, and if both or either of those two are a no just a pointer in the right direction for how to test would be nice.
